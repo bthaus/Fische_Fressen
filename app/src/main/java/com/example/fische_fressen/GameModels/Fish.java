@@ -54,11 +54,6 @@ public class Fish {
             fisheaten++;
             if(fisheaten==3){
                 size++;
-                switch (size){
-                    case 2:setImageID(2131165370);break;
-                    case 3:setImageID(2131165370);break;
-                }
-                Log.e("TAG", "grown: "+size );
 
             }
 

@@ -34,29 +34,30 @@ public class FishContainer {
 
         Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
 
-        if(eater.fish.getSize()-1==this.fish.getSize()||this.fish.getSize()==-2){
+        if(eater.fish.getSize()-1==this.fish.getSize()){
+
            this.fish= eater.fish;
 
-           int size=this.fish.grow();
-           switch (size){
-               case 0:setImgid(R.drawable.yellowfish);break;
-               case 1:setImgid(R.drawable.bluefish);break;
-               case 2:setImgid(R.drawable.purplefish);break;
-               case 3:setImgid(R.drawable.redfish);break;
-           }
-           eater.fish=GlobalVariables.defaultFish;
+           this.fish.grow();
 
+            eater.fish=GlobalVariables.defaultFish;
 
-        /*    this.fish.setSize(eater.fish.getSize());
-            this.fish.setImageID(eater.fish.getImageID());
-
-            eater.setImgid(gone);
-            eater.fish.setSize(-2);*/
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
 
             return this;
-        }else{
+        }else if(this.fish.getSize()==-2){
+            this.fish= eater.fish;
+
+
+            eater.fish=GlobalVariables.defaultFish;
+
+            Log.e("TAG", "current fishsize: "+this.fish.getSize() );
+            Log.e("TAG", "fish eaten");
+
+            return this;
+        }
+        else{
             throw new FishCantEatOtherFishException();
         }
     }

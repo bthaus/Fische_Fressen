@@ -185,6 +185,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             while(true){
                 position+=offset;
                 fishContainer=getItem(position).eat(fishContainer);
+
             }
         } catch (IndexOutOfBoundsException e) {
             Log.e("TAG", "wall reached: "+position);
@@ -192,7 +193,13 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             Log.e("TAG", "eat: cant be eaten"+position );
         }
         super.getItem(position-offset).setImgid(safe);
-
+        int size=fishContainer.fish.getSize();
+        switch (size){
+            case 0:fishContainer.setImgid(R.drawable.yellowfish);break;
+            case 1:fishContainer.setImgid(R.drawable.bluefish);break;
+            case 2:fishContainer.setImgid(R.drawable.purplefish);break;
+            case 3:fishContainer.setImgid(R.drawable.redfish);break;
+        }
     }
 
 
