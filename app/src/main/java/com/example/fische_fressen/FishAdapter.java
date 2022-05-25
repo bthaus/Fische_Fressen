@@ -16,6 +16,7 @@ import androidx.core.view.MotionEventCompat;
 
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Movement;
+import com.example.fische_fressen.utils.GlobalVariables;
 
 import java.util.LinkedList;
 
@@ -23,10 +24,13 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
 
     private static final String DEBUG_TAG ="test" ;
-
-    public FishAdapter(@NonNull Context context, LinkedList<FishContainer> fishContainerArrayList) {
+    Context gamescreen;
+    public FishAdapter(@NonNull Context context, LinkedList<FishContainer> fishContainerArrayList, FishContainer defaultContainer) {
         super(context, 0, fishContainerArrayList);
+        gamescreen=context;
+        this.defaultContainer=defaultContainer;
     }
+    FishContainer defaultContainer;
     int gone=R.drawable.ic_launcher_foreground;
     public FishContainer getContainer(int x, int y){
         int index = 0;
@@ -47,17 +51,33 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.card_item, parent, false);
         }
         FishContainer fishContainer = getItem(position);
+        fishContainer.position=position;
         ImageView courseIV = listitemView.findViewById(R.id.idIVcourse);
         courseIV.setImageResource(fishContainer.getImgid());
 
-       listitemView.setOnTouchListener(new View.OnTouchListener() {
-           float initialX =0;
+       listitemView.setOnClickListener(new View.OnClickListener() {
+          /* float initialX =0;
            float initialY =0;
            float endX=0;
-           float endY=0;
+           float endY=0;*/
            @Override
-           public boolean onTouch(View view, MotionEvent motionEvent) {
-               int action = MotionEventCompat.getActionMasked(motionEvent);
+           public void onClick(View view) {
+               if(GlobalVariables.lastClickedPosition==-1){
+                   GlobalVariables.lastClickedPosition=position;
+               }else{
+
+                   Log.e("TAG", GlobalVariables.lastClickedPosition+" position"+position );
+                   sendfish(GlobalVariables.lastClickedPosition,getItem(GlobalVariables.lastClickedPosition),getDirection(GlobalVariables.lastClickedPosition,position));
+                   GlobalVariables.lastClickedPosition=-1;
+               }
+                 /*
+               if(defaultContainer==null){
+                   defaultContainer=fishContainer;
+                   fishContainer.position=position;
+               }else{
+                   Log.e("test",position+"default:"+defaultContainer.position);
+               }*/
+   /*            int action = MotionEventCompat.getActionMasked(motionEvent);
 
                switch (action) {
                    case (MotionEvent.ACTION_DOWN):
@@ -102,7 +122,8 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                        return true;
 
                }
-               return true;
+
+               return true;  */
            }
        });
         /*
@@ -114,7 +135,29 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         });*/
         return listitemView;
     }
+    public Movement.Direction getDirection(int first, int second){
+        Movement.Direction leftOrRight=null;
+        Movement.Direction upOrDown=null;
+        int row=first%5;
+        if(second%5>row){
+            leftOrRight= Movement.Direction.RIGHT;
+            return Movement.Direction.RIGHT;
+        }
+        if(second%5<row){
+            leftOrRight= Movement.Direction.LEFT;
+            return Movement.Direction.LEFT;
+        }
 
+
+        if(first<second){
+            upOrDown= Movement.Direction.DOWN;
+            return Movement.Direction.DOWN;
+        }else{
+            upOrDown= Movement.Direction.UP;
+            return Movement.Direction.UP;
+        }
+
+    }
     public void sendfish(int position, FishContainer fish, Movement.Direction direction ){
         Log.e("TAG", "offset "+direction);
         int offset=0;
@@ -140,7 +183,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         try {
             while(true){
                 position+=offset;
-                getItem(position).eat(fishContainer);
+                fishContainer=getItem(position).eat(fishContainer);
             }
         } catch (IndexOutOfBoundsException e) {
             Log.e("TAG", "wall reached: "+position);

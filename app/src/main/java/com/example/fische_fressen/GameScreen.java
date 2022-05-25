@@ -12,6 +12,7 @@ import android.widget.GridView;
 import androidx.core.view.MotionEventCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
 
 import java.util.LinkedList;
@@ -55,7 +56,7 @@ FishAdapter adapter;
         }
     }
 
-
+    FishContainer defaultContainer=new FishContainer(R.drawable.ic_launcher_foreground,-2);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +81,7 @@ FishAdapter adapter;
 
 
 
-         adapter = new FishAdapter(this, fishContainerLinkedList);
+         adapter = new FishAdapter(this, fishContainerLinkedList,defaultContainer);
         grid.setAdapter(adapter);
 
         Matrix matrix=grid.getMatrix();

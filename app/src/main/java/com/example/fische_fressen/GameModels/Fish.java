@@ -6,7 +6,17 @@ public class Fish {
     public int getImageID() {
         return imageID;
     }
+    public Fish(int ImageID, int isEmpty){
+        this.imageID=ImageID;
+        this.size=isEmpty;
+    }
+    public Fish(){
 
+    }
+    public Fish(Fish fish){
+        this.size=fish.size;
+        this.imageID=fish.imageID;
+    }
     public void setImageID(int imageID) {
         this.imageID = imageID;
     }
@@ -39,6 +49,7 @@ public class Fish {
     int size;
     String ID;
     Color color;
+    boolean isEmpty;
     enum fishType{
 
     }
