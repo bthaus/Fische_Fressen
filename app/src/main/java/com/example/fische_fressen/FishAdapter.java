@@ -7,15 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import java.util.ArrayList;
+
 import java.util.LinkedList;
 
-public class CourseGVAdapter extends ArrayAdapter<CourseModel> {
-    public CourseGVAdapter(@NonNull Context context, LinkedList<CourseModel> courseModelArrayList) {
-        super(context, 0, courseModelArrayList);
+public class FishAdapter extends ArrayAdapter<FishContainer> {
+    public FishAdapter(@NonNull Context context, LinkedList<FishContainer> fishContainerArrayList) {
+        super(context, 0, fishContainerArrayList);
     }
 
     @NonNull
@@ -26,17 +26,17 @@ public class CourseGVAdapter extends ArrayAdapter<CourseModel> {
             // Layout Inflater inflates each item to be displayed in GridView.
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.card_item, parent, false);
         }
-        CourseModel courseModel = getItem(position);
+        FishContainer fishContainer = getItem(position);
         ImageView courseIV = listitemView.findViewById(R.id.idIVcourse);
-        courseIV.setImageResource(courseModel.getImgid());
-        listitemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("test","i have been clicked!"+position);
+        courseIV.setImageResource(fishContainer.getImgid());
+        listitemView.setOnClickListener(view -> {
+            Log.e("test","i have been clicked!"+position);
 
-            remove(courseModel);
-            }
+        fishContainer.setImgid(R.drawable.ic_launcher_foreground);
+        notifyDataSetChanged();
         });
         return listitemView;
     }
+
+
 }

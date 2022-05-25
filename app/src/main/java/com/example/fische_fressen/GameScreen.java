@@ -1,26 +1,16 @@
 package com.example.fische_fressen;
 
-import android.content.Intent;
 import android.graphics.Matrix;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 import android.widget.GridView;
-import android.widget.ImageView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class GameScreen extends AppCompatActivity {
@@ -33,7 +23,7 @@ public class GameScreen extends AppCompatActivity {
     //bubblebalken und score anzeigen
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
-CourseGVAdapter adapter;
+FishAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,30 +33,32 @@ CourseGVAdapter adapter;
 
         GridView grid = binding.grid;
 
-        LinkedList<CourseModel> courseModelArrayList = new LinkedList<>();
+        LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
         for (int i = 0; i < 25; i++) {
-            courseModelArrayList.add(new CourseModel(R.drawable.icon));
-        }
+            int rand=(int)(Math.random()*10)%4;
+            switch (rand){
+                case 0:   fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish));break;
+                case 1:   fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish));break;
+                case 2:   fishContainerLinkedList.add(new FishContainer(R.drawable.redfish));break;
+                case 3:   fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish));break;
+                default:fishContainerLinkedList.add(new FishContainer(R.drawable.icon));
+            }
+             }
 
 
 
 
-         adapter = new CourseGVAdapter(this, courseModelArrayList);
+         adapter = new FishAdapter(this, fishContainerLinkedList);
         grid.setAdapter(adapter);
 
         Matrix matrix=grid.getMatrix();
+
 
 
     }
     public GameScreen getInstance(){
         return this;
     }
-    public  void remove(CourseModel courseModel){
 
-        adapter.remove(courseModel);
-
-
-
-    }
 
 }
