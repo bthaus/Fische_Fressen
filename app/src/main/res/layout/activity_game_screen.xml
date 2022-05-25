@@ -9,7 +9,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Fische_Fressen.AppBarOverlay">
+        android:theme="@style/Theme.Fische_Fressen.AppBarOverlay"
+        android:visibility="invisible">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -30,5 +31,13 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <GridView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:horizontalSpacing="0dp"
+        android:numColumns="5"
+        android:verticalSpacing="0dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
