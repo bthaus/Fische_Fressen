@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.GridView;
 
 import androidx.core.view.MotionEventCompat;
@@ -17,7 +18,7 @@ import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
 
 import java.util.LinkedList;
 
-public class GameScreen extends AppCompatActivity {
+public class GameScreen extends AppCompatActivity   {
 
     private static final String DEBUG_TAG = "test";
     private AppBarConfiguration appBarConfiguration;
@@ -29,32 +30,6 @@ public class GameScreen extends AppCompatActivity {
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
 FishAdapter adapter;
- @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        int action = MotionEventCompat.getActionMasked(event);
-
-        switch (action) {
-            case (MotionEvent.ACTION_DOWN):
-                Log.e(DEBUG_TAG, "Action was DOWN");
-                return true;
-            case (MotionEvent.ACTION_MOVE):
-                Log.e(DEBUG_TAG, "Action was MOVE");
-                return true;
-            case (MotionEvent.ACTION_UP):
-                Log.e(DEBUG_TAG, "Action was UP");
-                return true;
-            case (MotionEvent.ACTION_CANCEL):
-                Log.e(DEBUG_TAG, "Action was CANCEL");
-                return true;
-            case (MotionEvent.ACTION_OUTSIDE):
-                Log.e(DEBUG_TAG, "Movement occurred outside bounds " +
-                        "of current screen element");
-                return true;
-            default:
-                return super.onTouchEvent(event);
-        }
-    }
 
     FishContainer defaultContainer=new FishContainer(R.drawable.ic_launcher_foreground,-2);
     @Override
@@ -82,14 +57,40 @@ FishAdapter adapter;
 
 
          adapter = new FishAdapter(this, fishContainerLinkedList,defaultContainer);
-        grid.setAdapter(adapter);
 
-        Matrix matrix=grid.getMatrix();
+        grid.setAdapter(adapter);
+        reFiller reFiller=new reFiller();
+        reFiller.start();
 
 
 
     }
-    public GameScreen getInstance(){
+    public void onRefill(){
+        adapter.notifyDataSetChanged();
+    }
+
+
+    public class reFiller extends Thread
+    {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Log.e("TAG", "run: refiller " );
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.e("TAG", "refilling" );
+
+                adapter.refill();
+
+
+
+            }
+
+        }
+    }    public GameScreen getInstance(){
         return this;
     }
 

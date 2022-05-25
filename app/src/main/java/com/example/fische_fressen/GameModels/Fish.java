@@ -54,7 +54,7 @@ public class Fish {
             fisheaten++;
             if(fisheaten==3){
                 size++;
-
+                fisheaten=0;
             }
 
 

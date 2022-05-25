@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MotionEventCompat;
 
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
+import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.utils.GlobalVariables;
 
@@ -32,14 +33,6 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     }
     FishContainer defaultContainer;
     int gone=R.drawable.ic_launcher_foreground;
-    public FishContainer getContainer(int x, int y){
-        int index = 0;
-        if(x>1){
-             index=(x-1)*5;
-        }
-        index=+y;
-        return super.getItem(index);
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     @NonNull
@@ -56,84 +49,23 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         ImageView courseIV = listitemView.findViewById(R.id.idIVcourse);
         courseIV.setImageResource(fishContainer.getImgid());
 
-       listitemView.setOnClickListener(new View.OnClickListener() {
-          /* float initialX =0;
-           float initialY =0;
-           float endX=0;
-           float endY=0;*/
-           @Override
-           public void onClick(View view) {
-               if(GlobalVariables.lastClickedPosition==-1){
-                   GlobalVariables.lastClickedPosition=position;
-               }else{
+       listitemView.setOnClickListener(view -> {
+           if(fishContainer.fish.getSize()==3){
+               fishContainer.fish=GlobalVariables.defaultFish;
+               notifyDataSetChanged();
+           }else{
+               if (GlobalVariables.lastClickedPosition == -1) {
+                   GlobalVariables.lastClickedPosition = position;
+               } else {
 
-                   Log.e("TAG", GlobalVariables.lastClickedPosition+" position"+position );
-                   sendfish(GlobalVariables.lastClickedPosition,getItem(GlobalVariables.lastClickedPosition),getDirection(GlobalVariables.lastClickedPosition,position));
-                   GlobalVariables.lastClickedPosition=-1;
+                   Log.e("TAG", GlobalVariables.lastClickedPosition + " position" + position);
+                   sendfish(GlobalVariables.lastClickedPosition, getItem(GlobalVariables.lastClickedPosition), getDirection(GlobalVariables.lastClickedPosition, position));
+                   GlobalVariables.lastClickedPosition = -1;
                }
-                 /*
-               if(defaultContainer==null){
-                   defaultContainer=fishContainer;
-                   fishContainer.position=position;
-               }else{
-                   Log.e("test",position+"default:"+defaultContainer.position);
-               }*/
-   /*            int action = MotionEventCompat.getActionMasked(motionEvent);
-
-               switch (action) {
-                   case (MotionEvent.ACTION_DOWN):
-                       initialX =motionEvent.getRawX();
-                       initialY =motionEvent.getRawY();
-                       Log.e(DEBUG_TAG, position+"Action was DOWN");
-                       Log.e("TAG", position+"x: "+ initialX);
-                       Log.e("TAG", position+"Y: "+ initialY);
-                       return true;
-
-                   case (MotionEvent.ACTION_UP):
-                       endX=motionEvent.getRawX();
-                       endY=motionEvent.getRawY();
-                       Log.e("TAG", position+"x: "+ endX);
-                       Log.e("TAG", position+"Y: "+ endY);
-                       Log.e(DEBUG_TAG, position+"Action was UP");
-                       float x=endX-initialX;
-                       float y=endY-initialY;
-                       if(x<1){
-                           x=x*(-1);
-                       }
-                       if(y<1){
-                           y=y*(-1);
-                       }
-                       if(x<y){
-                           if(endY-initialY<0){
-                               sendfish(position,fishContainer, Movement.Direction.UP);
-                               Log.e(DEBUG_TAG, "up");
-                           }else{
-                               sendfish(position,fishContainer, Movement.Direction.DOWN);
-                               Log.e(DEBUG_TAG, "down");
-                           }
-                       }else{
-                           if(endX-initialX<0){
-                               sendfish(position,fishContainer, Movement.Direction.LEFT);
-                               Log.e(DEBUG_TAG, "left");
-                           }else{
-                               sendfish(position,fishContainer, Movement.Direction.RIGHT);
-                               Log.e(DEBUG_TAG, "right");
-                           }
-                       }
-                       return true;
-
-               }
-
-               return true;  */
            }
+
        });
-        /*
-        listitemView.setOnClickListener(view -> {
-            Log.e("test","i have been clicked!"+position);
-           sendfish(position,fishContainer, Movement.Direction.RIGHT);
 
-
-        });*/
         return listitemView;
     }
     public Movement.Direction getDirection(int first, int second){
@@ -159,6 +91,24 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         }
 
     }
+    public void refill(){
+        for (int i = 0; i < 25; i++) {
+            if(getItem(i).fish.getSize()==-2) {
+                Fish fish=new Fish();
+                int rand=(int)(Math.random()*10)%4;
+                switch (rand){
+                    case 0:   fish.setImageID(R.drawable.bluefish);fish.setSize(1);break;
+                    case 1:   fish.setImageID(R.drawable.yellowfish);fish.setSize(0);break;
+                    case 2:   fish.setImageID(R.drawable.redfish);fish.setSize(3);break;
+                    case 3:   fish.setImageID(R.drawable.purplefish);fish.setSize(2);break;
+
+                }
+                getItem(i).fish=fish;
+            }
+        }
+
+    }
+
     public void sendfish(int position, FishContainer fish, Movement.Direction direction ){
         Log.e("TAG", "offset "+direction);
         int offset=0;
