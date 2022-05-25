@@ -1,8 +1,13 @@
 package com.example.fische_fressen.GameModels;
 
 import android.graphics.Color;
+import android.util.Log;
 
 public class Fish {
+
+
+
+
     public int getImageID() {
         return imageID;
     }
@@ -44,12 +49,34 @@ public class Fish {
     public void setColor(Color color) {
         this.color = color;
     }
+    public int grow() {
+        if(size<3){
+            fisheaten++;
+            if(fisheaten==3){
+                size++;
+                switch (size){
+                    case 2:setImageID(2131165370);break;
+                    case 3:setImageID(2131165370);break;
+                }
+                Log.e("TAG", "grown: "+size );
 
+            }
+
+
+        }
+
+return size;
+    }
+
+     int fisheaten=0;
     int imageID;
-    int size;
+     int size;
     String ID;
     Color color;
     boolean isEmpty;
+
+
+
     enum fishType{
 
     }

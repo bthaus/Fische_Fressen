@@ -52,6 +52,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         }
         FishContainer fishContainer = getItem(position);
         fishContainer.position=position;
+
         ImageView courseIV = listitemView.findViewById(R.id.idIVcourse);
         courseIV.setImageResource(fishContainer.getImgid());
 

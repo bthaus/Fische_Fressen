@@ -8,6 +8,8 @@ import com.example.fische_fressen.utils.GlobalVariables;
 
 public class FishContainer {
 
+
+
     // string course_name for storing course_name
     // and imgid for storing image id.
 
@@ -34,6 +36,14 @@ public class FishContainer {
 
         if(eater.fish.getSize()-1==this.fish.getSize()||this.fish.getSize()==-2){
            this.fish= eater.fish;
+
+           int size=this.fish.grow();
+           switch (size){
+               case 0:setImgid(R.drawable.yellowfish);break;
+               case 1:setImgid(R.drawable.bluefish);break;
+               case 2:setImgid(R.drawable.purplefish);break;
+               case 3:setImgid(R.drawable.redfish);break;
+           }
            eater.fish=GlobalVariables.defaultFish;
 
 
