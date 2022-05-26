@@ -43,7 +43,10 @@ TextView score;
         setContentView(binding.getRoot());
 
         GridView grid = binding.grid;
-
+        binding.fab.setOnClickListener(view -> {
+            adapter.refill();
+            adapter.notifyDataSetChanged();
+        });
         LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
         for (int i = 0; i < 25; i++) {
 
