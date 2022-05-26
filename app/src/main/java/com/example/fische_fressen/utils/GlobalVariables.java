@@ -14,7 +14,7 @@ public class GlobalVariables {
     public static GameMode gameMode;
     public static int randomSeed;
     public static int lastClickedPosition=-1;
-    public static Fish defaultFish=new Fish(R.drawable.ic_launcher_foreground,-2);
+    public static Fish defaultFish=new Fish(R.drawable.empty,-2);
 
     public static int getDifficulty() {
         return difficulty;

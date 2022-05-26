@@ -1,5 +1,6 @@
 package com.example.fische_fressen;
 
+import android.content.Intent;
 import android.graphics.Matrix;
 import android.os.Bundle;
 
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.core.view.MotionEventCompat;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,6 +33,7 @@ public class GameScreen extends AppCompatActivity   {
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
 FishAdapter adapter;
 
+TextView score;
     FishContainer defaultContainer=new FishContainer(R.drawable.ic_launcher_foreground,-2);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +46,17 @@ FishAdapter adapter;
 
         LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
         for (int i = 0; i < 25; i++) {
-            int rand=(int)(Math.random()*10)%4;
+
+            int rand=(int)(Math.random()*1000)%5;
             switch (rand){
-                case 0:   fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish,0));break;
-                case 1:   fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish,1));break;
-                case 2:   fishContainerLinkedList.add(new FishContainer(R.drawable.redfish,3));break;
-                case 3:   fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish,2));break;
+                case 0:
+                case 4:
+                    fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish,0));break;
+                case 1:
+                case 3:
+                       fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish,1));break;
+                case 2:   fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish,2));break;
+
                 default:fishContainerLinkedList.add(new FishContainer(R.drawable.icon,5));
             }
              }
@@ -57,6 +65,7 @@ FishAdapter adapter;
 
 
          adapter = new FishAdapter(this, fishContainerLinkedList,defaultContainer);
+        adapter.setGameScreen(this);
 
         grid.setAdapter(adapter);
         reFiller reFiller=new reFiller();
@@ -65,19 +74,22 @@ FishAdapter adapter;
 
 
     }
+    public void win(){
+        startActivity( new Intent(this,MainActivity.class));
+
+    }
     public void onRefill(){
         adapter.notifyDataSetChanged();
     }
 
 
-    public class reFiller extends Thread
-    {
+    public class reFiller extends Thread {
         @Override
         public void run() {
             while (true) {
                 try {
                     Log.e("TAG", "run: refiller " );
-                    Thread.sleep(15000);
+                    Thread.sleep(60000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -19,6 +19,13 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.Fische_Fressen.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="89dp"
+            android:layout_height="46dp"
+            android:text="0"
+            android:textSize="34sp" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_game_screen" />
@@ -32,12 +39,21 @@
         android:layout_marginBottom="16dp"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="458dp"
+        android:layout_height="796dp"
+        app:srcCompat="@drawable/bg_dim" />
+
     <GridView
         android:id="@+id/grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="0dp"
         android:numColumns="5"
-        android:verticalSpacing="0dp" />
+
+        android:verticalSpacing="0dp">
+
+    </GridView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
