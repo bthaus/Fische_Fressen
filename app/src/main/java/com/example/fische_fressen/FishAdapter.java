@@ -18,6 +18,7 @@ import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.GameModels.Movement;
+import com.example.fische_fressen.utils.Dinner;
 import com.example.fische_fressen.utils.GlobalVariables;
 
 import java.util.LinkedList;
@@ -73,6 +74,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                } else {
                     if(GlobalVariables.lastClickedPosition==position&&fishContainer.fish.getSize()==3){
                         fishContainer.fish=GlobalVariables.defaultFish;
+                        gameScreen.setPoints(10);
                     }
                    Log.e("TAG", GlobalVariables.lastClickedPosition + " position" + position);
                    sendfish(GlobalVariables.lastClickedPosition, getItem(GlobalVariables.lastClickedPosition), getDirection(GlobalVariables.lastClickedPosition, position));
@@ -184,12 +186,14 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
         fishContainer.setImgid(gone);
         Log.e("TAG", "offset "+offset);
+        int points=2;
         try {
             while(true){
 
                     position+=offset;
-                    fishContainer=getItem(position).eat(fishContainer);
-
+                    Dinner dinner=getItem(position).eat(fishContainer);
+                    fishContainer=dinner.container;
+                    points*=dinner.points;
 
 
             }
@@ -206,7 +210,13 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             case 2:fishContainer.setImgid(R.drawable.purplefish);break;
             case 3:fishContainer.setImgid(R.drawable.redfish);break;
         }
+        if(points>2){
+            gameScreen.setPoints(points);
+        }
+
     }
+
+
 
 
 }

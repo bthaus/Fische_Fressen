@@ -34,6 +34,7 @@ public class GameScreen extends AppCompatActivity   {
 FishAdapter adapter;
 
 TextView score;
+int scorepoints=0;
     FishContainer defaultContainer=new FishContainer(R.drawable.ic_launcher_foreground,-2);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ TextView score;
 
         binding = ActivityGameScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        score=binding.scorepoints;
         GridView grid = binding.grid;
         binding.fab.setOnClickListener(view -> {
             adapter.refill();
@@ -83,6 +84,11 @@ TextView score;
     }
     public void onRefill(){
         adapter.notifyDataSetChanged();
+    }
+
+    public void setPoints(int points) {
+        scorepoints=scorepoints+points;
+        score.setText(String.valueOf(scorepoints));
     }
 
 
