@@ -2,20 +2,18 @@ package com.example.fische_fressen;
 
 import android.util.Log;
 
+import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Fish;
+import com.example.fische_fressen.utils.Dinner;
 import com.example.fische_fressen.utils.GlobalVariables;
 
 public class FishContainer {
 
 
-
-    // string course_name for storing course_name
-    // and imgid for storing image id.
-
     public int position;
     Fish fish;
-    int gone=R.drawable.ic_launcher_foreground;
+
     public FishContainer(int imgid,int size) {
         fish=new Fish(GlobalVariables.defaultFish);
         this.fish.setSize(size);
@@ -30,7 +28,7 @@ public class FishContainer {
 
     public void setImgid(int imgid) { this.fish.setImageID(imgid);
     }
-    public FishContainer eat(FishContainer eater) throws FishCantEatOtherFishException {
+    public Dinner eat(FishContainer eater) throws FishCantEatOtherFishException {
 
         Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
 
@@ -45,7 +43,7 @@ public class FishContainer {
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
 
-            return this;
+            return new Dinner(this, fish.getSize());
         }else if(this.fish.getSize()==-2){
             this.fish= eater.fish;
 
@@ -55,10 +53,23 @@ public class FishContainer {
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
 
-            return this;
+            return new Dinner(this,1);
         }
         else{
             throw new FishCantEatOtherFishException();
         }
+    }
+
+    public void fall(FishContainer destination) throws BottomReachedException {
+        if(this.fish.getSize()==-2){
+            throw new BottomReachedException();
+        }
+        if(destination.fish.getSize()==-2){
+            destination.fish=this.fish;
+            this.fish=GlobalVariables.defaultFish;
+        }else{
+            throw new BottomReachedException();
+        }
+
     }
 }

@@ -19,9 +19,28 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/Theme.Fische_Fressen.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="89dp"
+            android:layout_height="46dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
+            android:text="0"
+            android:textSize="34sp" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_game_screen" />
+    <include
+        android:id="@+id/include2"
+        layout="@layout/content_game_screen" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="458dp"
+        android:layout_height="796dp"
+        android:layout_gravity="end"
+        app:srcCompat="@drawable/bg_dim" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -30,7 +49,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_popup_sync" />
 
     <GridView
         android:id="@+id/grid"
@@ -38,6 +57,29 @@
         android:layout_height="match_parent"
         android:horizontalSpacing="0dp"
         android:numColumns="5"
-        android:verticalSpacing="0dp" />
+
+        android:verticalSpacing="0dp">
+
+    </GridView>
+
+    <TextView
+        android:id="@+id/scoreView"
+        android:layout_width="120dp"
+        android:layout_height="58dp"
+        android:layout_gravity="bottom|center_horizontal|left"
+        android:text="Score: "
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/scorepoints"
+        android:layout_width="170dp"
+        android:layout_height="58dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="0"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
