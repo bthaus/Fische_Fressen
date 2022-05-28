@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Fische_Fressen">
+        android:theme="@style/Theme.Fische_Fressen.NoActionBar"
+        >
         <activity
             android:name=".GameScreen"
             android:exported="false"
@@ -48,6 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
