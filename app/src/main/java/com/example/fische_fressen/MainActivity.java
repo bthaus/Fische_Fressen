@@ -8,10 +8,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-
 import com.example.fische_fressen.databinding.ActivityMainBinding;
 import com.example.fische_fressen.utils.GlobalVariables;
 import org.json.JSONObject;
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         builder.show();
     }
     public void startTutorial(){
-        //TODO: implement Activity
+        startActivity(new Intent(this, TutorialActivity.class));
     }
 
     public void toLobby(View view) {
