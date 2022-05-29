@@ -36,7 +36,7 @@ public class FishContainer {
 
            this.fish.grow();
 
-            eater.fish=GlobalVariables.defaultFish;
+           eater.fish=GlobalVariables.defaultFish;
 
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
