@@ -20,29 +20,30 @@ import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
 
 import java.util.LinkedList;
 
-public class GameScreen extends AppCompatActivity   {
+public class GameScreen extends AppCompatActivity {
 
     private static final String DEBUG_TAG = "test";
     private AppBarConfiguration appBarConfiguration;
     private ActivityGameScreenBinding binding;
-//raster erstellen
+    //raster erstellen
     //container mit fischen füllen
     //spielzüge ausführen können
     //bubblebalken und score anzeigen
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
-FishAdapter adapter;
+    FishAdapter adapter;
 
-TextView score;
-int scorepoints=0;
-    FishContainer defaultContainer=new FishContainer(R.drawable.ic_launcher_foreground,-2);
+    TextView score;
+    int scorepoints = 0;
+    FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityGameScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        score=binding.scorepoints;
+        score = binding.scorepoints;
         GridView grid = binding.grid;
         binding.fab.setOnClickListener(view -> {
             adapter.refill();
@@ -51,43 +52,43 @@ int scorepoints=0;
         LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
         for (int i = 0; i < 25; i++) {
 
-            int rand=(int)(Math.random()*1000)%5;
-            switch (rand){
+            int rand = (int) (Math.random() * 1000) % 5;
+            switch (rand) {
                 case 0:
                 case 4:
-                    fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish,0));break;
+                    fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish, 0));
+                    break;
                 case 1:
                 case 3:
-                       fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish,1));break;
-                case 2:   fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish,2));break;
+                    fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish, 1));
+                    break;
+                case 2:
+                    fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish, 2));
+                    break;
 
-                default:fishContainerLinkedList.add(new FishContainer(R.drawable.icon,5));
+                default:
+                    fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
             }
-             }
+        }
 
-
-
-
-         adapter = new FishAdapter(this, fishContainerLinkedList,defaultContainer);
+        adapter = new FishAdapter(this, fishContainerLinkedList, defaultContainer);
         adapter.setGameScreen(this);
 
         grid.setAdapter(adapter);
-        reFiller reFiller=new reFiller();
+        reFiller reFiller = new reFiller();
         reFiller.start();
-
-
-
     }
-    public void win(){
-        startActivity( new Intent(this,MainActivity.class));
 
+    public void win() {
+        startActivity(new Intent(this, MainActivity.class));
     }
-    public void onRefill(){
+
+    public void onRefill() {
         adapter.notifyDataSetChanged();
     }
 
     public void setPoints(int points) {
-        scorepoints=scorepoints+points;
+        scorepoints = scorepoints + points;
         score.setText(String.valueOf(scorepoints));
     }
 
@@ -97,23 +98,19 @@ int scorepoints=0;
         public void run() {
             while (true) {
                 try {
-                    Log.e("TAG", "run: refiller " );
+                    Log.e("TAG", "run: refiller ");
                     Thread.sleep(60000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Log.e("TAG", "refilling" );
+                Log.e("TAG", "refilling");
 
                 adapter.refill();
-
-
-
             }
-
         }
-    }    public GameScreen getInstance(){
-        return this;
     }
 
-
+    public GameScreen getInstance() {
+        return this;
+    }
 }

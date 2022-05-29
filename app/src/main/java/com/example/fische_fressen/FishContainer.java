@@ -20,8 +20,6 @@ public class FishContainer {
         this.fish.setImageID(imgid);
     }
 
-
-
     public int getImgid() {
         return fish.getImageID();
     }
