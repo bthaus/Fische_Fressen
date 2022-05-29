@@ -3,6 +3,8 @@ package com.example.fische_fressen.GameModels;
 import android.graphics.Color;
 import android.util.Log;
 
+import com.example.fische_fressen.R;
+
 public class Fish {
 
 
@@ -54,6 +56,20 @@ public class Fish {
             fisheaten++;
             if(fisheaten==3){
                 size++;
+                switch (size) {
+                    case 0:
+                        setImageID(R.drawable.yellowfish);
+                        break;
+                    case 1:
+                        setImageID(R.drawable.bluefish);
+                        break;
+                    case 2:
+                        setImageID(R.drawable.purplefish);
+                        break;
+                    case 3:
+                        setImageID(R.drawable.redfish);
+                        break;
+                }
                 fisheaten=0;
             }
 

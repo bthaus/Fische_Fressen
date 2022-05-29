@@ -1,11 +1,17 @@
 package com.example.fische_fressen;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.GridLayoutAnimationController;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
@@ -19,6 +25,8 @@ import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.utils.Dinner;
 import com.example.fische_fressen.utils.GlobalVariables;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class FishAdapter extends ArrayAdapter<FishContainer> {
@@ -67,13 +75,42 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
             if (GlobalVariables.lastClickedPosition == -1) {
                 GlobalVariables.lastClickedPosition = position;
-
+                switch (fishContainer.fish.getSize()) {
+                    case 0:
+                        fishContainer.setImgid(R.drawable.yellowfishselected);
+                        break;
+                    case 1:
+                        fishContainer.setImgid(R.drawable.bluefishselected);
+                        break;
+                    case 2:
+                        fishContainer.setImgid(R.drawable.purplefishselected);
+                        break;
+                    case 3:
+                        fishContainer.setImgid(R.drawable.redfishselected);
+                        break;
+                }
+                notifyDataSetChanged();
 
             } else {
                 if (GlobalVariables.lastClickedPosition == position && fishContainer.fish.getSize() == 3) {
                     fishContainer.fish = GlobalVariables.defaultFish;
                     gameScreen.setPoints(10);
                 }
+                switch (getItem(GlobalVariables.lastClickedPosition).fish.getSize()) {
+                    case 0:
+                        getItem(GlobalVariables.lastClickedPosition).setImgid(R.drawable.yellowfish);
+                        break;
+                    case 1:
+                        getItem(GlobalVariables.lastClickedPosition).setImgid(R.drawable.bluefish);
+                        break;
+                    case 2:
+                        getItem(GlobalVariables.lastClickedPosition).setImgid(R.drawable.purplefish);
+                        break;
+                    case 3:
+                        getItem(GlobalVariables.lastClickedPosition).setImgid(R.drawable.redfish);
+                        break;
+                }
+                notifyDataSetChanged();
                 Log.e("TAG", GlobalVariables.lastClickedPosition + " position" + position);
                 sendfish(GlobalVariables.lastClickedPosition, getItem(GlobalVariables.lastClickedPosition), getDirection(GlobalVariables.lastClickedPosition, position));
                 GlobalVariables.lastClickedPosition = -1;
@@ -167,50 +204,45 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         int offset = 0;
 
         //Offset Werte nun in Movement (enum)
-        eat(position, direction.getDirectionOffset(), fish);
+        int endposition=eat(position, direction.getDirectionOffset(), fish);
 
-        notifyDataSetChanged();
+       notifyDataSetChanged();
 
     }
 
-    public void eat(int position, int offset, FishContainer fishContainer) {
+    public int eat(int position, int offset, FishContainer fishContainer) {
         int safe = getItem(position).getImgid();
-        fishContainer.setImgid(gone);
+
 
         Log.e("TAG", "offset " + offset);
 
         int points = 2;
         try {
             while (true) {
+                //calculate offset
                 position += offset;
+                //get item of newly calculated position and execute eat
                 Dinner dinner = getItem(position).eat(fishContainer);
                 fishContainer = dinner.container;
                 points *= dinner.points;
+
+                    long currentTime = Calendar.getInstance().getTimeInMillis();
+                    long time = 0;
+                    /*while(currentTime+500>=time){
+                        time= Calendar.getInstance().getTimeInMillis();
+                    }*/
+                    notifyDataSetChanged();
+
             }
         } catch (IndexOutOfBoundsException e) {
             Log.e("TAG", "wall reached: " + position);
         } catch (FishCantEatOtherFishException e) {
             Log.e("TAG", "eat: cant be eaten" + position);
         }
-        super.getItem(position - offset).setImgid(safe);
-        int size = fishContainer.fish.getSize();
-        switch (size) {
-            case 0:
-                fishContainer.setImgid(R.drawable.yellowfish);
-                break;
-            case 1:
-                fishContainer.setImgid(R.drawable.bluefish);
-                break;
-            case 2:
-                fishContainer.setImgid(R.drawable.purplefish);
-                break;
-            case 3:
-                fishContainer.setImgid(R.drawable.redfish);
-                break;
-        }
+
         if (points > 2) {
             gameScreen.setPoints(points);
         }
-
+        return fishContainer.position;
     }
 }
