@@ -254,6 +254,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         Log.e("TAG", "offset " + offset);
         Looper.prepare();
         int points = 2;
+        int timeout=300;
         try {
             while (true) {
                 //calculate offset
@@ -263,11 +264,14 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 fishContainer = dinner.container;
                 points *= dinner.points;
               gameScreen.datasetchanged();
+              gameScreen.bubble(fishContainer.fish.getSize());
                 if (dinner.points!=1  ) {
                     gameScreen.setPoints(points);
                 }
                 try {
-                    Thread.sleep(300);
+
+                    Thread.sleep(timeout);
+                    timeout=(int)(timeout*0.66);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

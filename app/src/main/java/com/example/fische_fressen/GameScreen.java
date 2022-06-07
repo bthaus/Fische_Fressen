@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
@@ -38,7 +40,7 @@ public class GameScreen extends AppCompatActivity {
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
     FishAdapter adapter;
-
+    int difficulty=100;
     TextView score;
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
@@ -86,6 +88,8 @@ public class GameScreen extends AppCompatActivity {
         grid.setAdapter(adapter);
         reFiller reFiller = new reFiller();
         reFiller.start();
+        Bubblebar bubblebar=new Bubblebar();
+        bubblebar.start();
 
     }
     //to be called isntead of notifydatasetchanged because this runs on the uithread no matter where you called it from
@@ -107,6 +111,26 @@ public class GameScreen extends AppCompatActivity {
         }
 
         score.setText(String.valueOf(scorepoints));
+    }
+
+    public void bubble(int size) {
+        binding.bubblebar.setProgress(binding.bubblebar.getProgress()+size*(difficulty/15));
+    }
+
+    public class Bubblebar extends Thread{
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public void run() {
+            binding.bubblebar.setProgress(100);
+            while(true){
+                try {
+                    Thread.sleep(difficulty);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                binding.bubblebar.setProgress(binding.bubblebar.getProgress()-1,true);
+            }
+        }
     }
 
 
