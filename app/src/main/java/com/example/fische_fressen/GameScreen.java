@@ -21,6 +21,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Fish;
+import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
 import com.example.fische_fressen.utils.Dinner;
@@ -86,9 +87,13 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     }
 
     public void win() {
-        startActivity(new Intent(this, MainActivity.class));
+        GameStatistics.setHighscore(scorepoints);
+        startActivity(
+                new Intent(this, MainActivity.class));
     }
     private void lose() {
+        GameStatistics.setHighscore(scorepoints);
+        GameStatistics.print();
         startActivity(new Intent(this, MainActivity.class));
     }
 
@@ -100,6 +105,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         if(points!=scorepoints){
             scorepoints = scorepoints + points;
         }
+        GameStatistics.addPoints(points);
 
         score.setText(String.valueOf(scorepoints));
     }

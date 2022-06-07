@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
+import com.example.fische_fressen.Exceptions.WallReachedException;
 import com.example.fische_fressen.GameModels.Fish;
+import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.utils.Dinner;
 import com.example.fische_fressen.utils.Global;
 
@@ -29,12 +31,18 @@ public class FishContainer {
 
     public void setImgid(int imgid) { this.fish.setImageID(imgid);
     }
-    public Dinner eat(FishContainer eater) throws FishCantEatOtherFishException {
+    public Dinner eat(FishContainer eater) throws FishCantEatOtherFishException, WallReachedException {
+boolean wallreached=false;
+if(this.position%5==0||(this.position+1)%5==0){
+    if(eater.position+1==position||eater.position-1==position){
+        wallreached=true;
+    }
 
+}
         Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
 
         if(eater.fish.getSize()-1==this.fish.getSize()){
-
+            GameStatistics.fishEaten(this.fish);
            this.fish= eater.fish;
 
            this.fish.grow();
@@ -44,7 +52,7 @@ public class FishContainer {
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
 
-            return new Dinner(this, fish.getSize());
+            return new Dinner(this, fish.getSize(),wallreached);
         }else if(this.fish.getSize()==-2){
             this.fish= eater.fish;
 
@@ -54,7 +62,7 @@ public class FishContainer {
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
 
-            return new Dinner(this,1);
+            return new Dinner(this,1,wallreached);
         }
         else{
             throw new FishCantEatOtherFishException();
@@ -76,11 +84,12 @@ public class FishContainer {
     public boolean explode(){
 
         if(this.fish.getSize()!=-2){
+            GameStatistics.fishExploded(this.fish);
             Global.getGameScreen().setPoints(this.fish.getSize()*20);
             Global.getGameScreen().bubble(this.fish.getSize()*2);
 
         }
-        if(fish.getSize()==5){
+        if(fish.getSize()==5||fish.getSize()==3){
             Log.e("TAG", "---------------------------------------explode: " );
             this.fish=Global.defaultFish;
             return true;

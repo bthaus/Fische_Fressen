@@ -7,7 +7,7 @@ public class ExplosionFish extends Fish{
     int range;
     public ExplosionFish(){
         super.size= Global.MineSize;
-        super.imageID= R.drawable.min;
+        super.setImageID(R.drawable.mine);
     }
     enum Type{
         PufferFish,
