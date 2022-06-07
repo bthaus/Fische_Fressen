@@ -21,7 +21,7 @@ public class Global {
     public static int lastClickedPosition=-1;
     public static Fish defaultFish=new Fish(R.drawable.empty,-2);
     public static int scorePoints=0;
-    public static int difficultyValue=90;
+    public static int difficultyValue=150;
     public static Difficulty difficulty=Difficulty.HARD;
 
     public static boolean isSleepytime() {
@@ -29,9 +29,11 @@ public class Global {
     }
     public static void setDifficulty(Difficulty diff){
         switch (diff){
-            case EASY: difficultyValue=150;
-            case MEDIUM: difficultyValue=110;
-            case HARD: difficultyValue=90;
+            case EASY: difficultyValue=150;break;
+            case MEDIUM: difficultyValue=110;break;
+            case HARD: difficultyValue=90;break;
+            case GAMEJOURNALIST:difficultyValue=1000;break;
+            default:break;
         }
        difficulty=diff;
     }

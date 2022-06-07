@@ -2,7 +2,9 @@ package com.example.fische_fressen;
 
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -119,6 +121,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
+            binding.bubblebar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
             binding.bubblebar.setProgress(100);
             while(playing){
                 try {
