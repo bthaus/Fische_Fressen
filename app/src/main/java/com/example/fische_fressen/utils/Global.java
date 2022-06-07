@@ -31,7 +31,7 @@ public class Global {
         Global.sleepytime = sleepytime;
     }
 
-    public static boolean sleepytime=true;
+    public static boolean sleepytime=false;
 
     public static int getDifficulty() {
         return difficulty;
