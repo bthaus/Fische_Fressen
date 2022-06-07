@@ -41,7 +41,7 @@ public class GameScreen extends AppCompatActivity {
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
     FishAdapter adapter;
-    int difficulty=150;
+    int difficulty=Global.difficultyValue;
     TextView score;
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);

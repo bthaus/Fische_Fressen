@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class Global {
 
 
-    public static int difficulty;
+
     public static int MineSize =5;
     public static String userName;
     public static String ID;
@@ -21,11 +21,20 @@ public class Global {
     public static int lastClickedPosition=-1;
     public static Fish defaultFish=new Fish(R.drawable.empty,-2);
     public static int scorePoints=0;
+    public static int difficultyValue=90;
+    public static Difficulty difficulty=Difficulty.HARD;
 
     public static boolean isSleepytime() {
         return sleepytime;
     }
-
+    public static void setDifficulty(Difficulty diff){
+        switch (diff){
+            case EASY: difficultyValue=150;
+            case MEDIUM: difficultyValue=110;
+            case HARD: difficultyValue=90;
+        }
+       difficulty=diff;
+    }
     public static void setSleepytime(boolean sleepytime) {
 
         Global.sleepytime = sleepytime;
@@ -33,9 +42,7 @@ public class Global {
 
     public static boolean sleepytime=false;
 
-    public static int getDifficulty() {
-        return difficulty;
-    }
+
     public static LinkedList<FishContainer>fishContainerLinkedList=new LinkedList<>();
 
     public static GameScreen getGameScreen() {
@@ -47,9 +54,7 @@ public class Global {
     }
 
     public static GameScreen gameScreen;
-    public static void setDifficulty(int difficulty) {
-        Global.difficulty = difficulty;
-    }
+
 
     public static int getMineSize() {
         return MineSize;
