@@ -1,8 +1,10 @@
 package com.example.fische_fressen.utils;
 
 import com.example.fische_fressen.FishContainer;
+import com.example.fische_fressen.GameModels.ExplosionFish;
 import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.GameModels.GameMode;
+import com.example.fische_fressen.GameScreen;
 import com.example.fische_fressen.R;
 
 import java.util.LinkedList;
@@ -11,7 +13,7 @@ public class Global {
 
 
     public static int difficulty;
-    public static int explosionrange;
+    public static int MineSize =5;
     public static String userName;
     public static String ID;
     public static GameMode gameMode;
@@ -24,19 +26,33 @@ public class Global {
     }
     public static LinkedList<FishContainer>fishContainerLinkedList=new LinkedList<>();
 
+    public static GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public static void setGameScreen(GameScreen gameScreen) {
+        Global.gameScreen = gameScreen;
+    }
+
+    public static GameScreen gameScreen;
     public static void setDifficulty(int difficulty) {
         Global.difficulty = difficulty;
     }
 
-    public static int getExplosionrange() {
-        return explosionrange;
+    public static int getMineSize() {
+        return MineSize;
     }
 
-    public static void setExplosionrange(int explosionrange) {
-        Global.explosionrange = explosionrange;
+    public static void setMineSize(int mineSize) {
+        Global.MineSize = mineSize;
     }
+
     public static Fish getRandomFish(){
-        int rand = (int) (Math.random() * 1000) % 3;
+        int rand = (int) (Math.random() * 1000);
+        if(rand>950){
+            return new ExplosionFish();
+        }
+        rand=rand%3;
         switch (rand) {
 
             case 0: return new Fish(R.drawable.yellowfish, 0);

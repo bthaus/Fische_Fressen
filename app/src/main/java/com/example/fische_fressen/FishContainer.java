@@ -73,4 +73,19 @@ public class FishContainer {
         }
 
     }
+    public boolean explode(){
+
+        if(this.fish.getSize()!=-2){
+            Global.getGameScreen().setPoints(this.fish.getSize()*20);
+            Global.getGameScreen().bubble(this.fish.getSize()*2);
+
+        }
+        if(fish.getSize()==5){
+            Log.e("TAG", "---------------------------------------explode: " );
+            this.fish=Global.defaultFish;
+            return true;
+        }
+        this.fish=Global.defaultFish;
+        return false;
+    }
 }

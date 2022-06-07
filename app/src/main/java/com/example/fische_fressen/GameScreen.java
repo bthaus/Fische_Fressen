@@ -47,6 +47,7 @@ public class GameScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Global.setGameScreen(this);
         super.onCreate(savedInstanceState);
 
         binding = ActivityGameScreenBinding.inflate(getLayoutInflater());
@@ -54,7 +55,10 @@ public class GameScreen extends AppCompatActivity {
         score = binding.scorepoints;
         GridView grid = binding.grid;
         binding.fab.setOnClickListener(view -> {
-            adapter.refill();
+            Global.fishContainerLinkedList.clear();
+            for (int i = 0; i < 25; i++) {
+                Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
+            }
             adapter.notifyDataSetChanged();
         });
         //LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
