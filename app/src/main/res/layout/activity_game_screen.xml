@@ -88,6 +88,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="173dp"
+
+        android:minWidth="200dp"
         android:layout_gravity="bottom|center_horizontal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

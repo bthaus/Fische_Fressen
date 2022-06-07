@@ -68,6 +68,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 case 3:
                     fishContainer.setImgid(R.drawable.redfishselected);
                     break;
+                case 5: fishContainer.setImgid(R.drawable.mineselected);
             }
             notifyDataSetChanged();
             return false;
@@ -86,6 +87,8 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 case 3:
                     getItem(Global.lastClickedPosition).setImgid(R.drawable.redfish);
                     break;
+                case 5: getItem(Global.lastClickedPosition).setImgid(R.drawable.min);
+                break;
             }
           notifyDataSetChanged();
             return true;
@@ -101,8 +104,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             // Layout Inflater inflates each item to be displayed in GridView.
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.card_item, parent, false);
         }
-        Log.e("TAG", "getView: im called!" );
-        FishContainer fishContainer = getItem(position);
+       FishContainer fishContainer = getItem(position);
         fishContainer.position = position;
 
         ImageView fishview = listitemView.findViewById(R.id.idIVcourse);
@@ -247,6 +249,9 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             gameScreen.bubble(5);
             return;
         }
+        if(position==newPosition && fish.fish.getSize()==5){
+            explode(newPosition);
+        }
         Log.e("TAG", "offset " + direction);
         int offset = 0;
 
@@ -254,6 +259,79 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         eat(position, direction.getDirectionOffset(), fish);
 
 
+
+    }
+
+    private void explode(int newPosition) {
+
+
+            if(newPosition%5==0){
+                if ( getItem(newPosition+1).explode()) {
+                   explode(newPosition+1);
+                }
+                try {
+                    if ( getItem(newPosition-5).explode()) {
+                        explode(newPosition-5);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } try {
+
+                    if ( getItem(newPosition+5).explode()) {
+                        explode(newPosition+5);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                getItem(newPosition).explode();
+
+                return;
+            }
+            if((newPosition+1)%5==0){
+                if ( getItem(newPosition-1).explode()) {
+                    explode(newPosition-1);
+                }
+                try {
+                    if ( getItem(newPosition-5).explode()) {
+                        explode(newPosition-5);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } try {
+
+                    if ( getItem(newPosition+5).explode()) {
+                        explode(newPosition+5);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                getItem(newPosition).explode();
+
+                return;
+            }
+        if ( getItem(newPosition+1).explode()) {
+            explode(newPosition+1);
+        }
+        if ( getItem(newPosition-1).explode()) {
+            explode(newPosition-1);
+        }
+        try {
+            if ( getItem(newPosition-5).explode()) {
+                explode(newPosition-5);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } try {
+
+            if ( getItem(newPosition+5).explode()) {
+                explode(newPosition+5);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        getItem(newPosition).explode();
+        Log.e("TAG", "explode: ");
 
     }
 
