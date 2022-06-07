@@ -141,6 +141,12 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
         //calls the fallloop multiple times in case a fish gets stuck
         for (int j=0;j<5;j++) {
+            for (int i = 0; i < 5; i++) {
+                if(getItem(i).fish.getSize()==-2){
+                    getItem(i).fish=Global.getRandomFish();
+                    gameScreen.datasetchanged();
+                }
+            }
             for (int i = 19; i >= 0; i--) {
                 while (true) {
                     try {
@@ -160,6 +166,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
             }
         }
+
 
 
     }
@@ -237,6 +244,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         if (position == newPosition && fish.fish.getSize() == 3) {
             fish.fish = Global.defaultFish;
             gameScreen.setPoints(10);
+            gameScreen.bubble(5);
             return;
         }
         Log.e("TAG", "offset " + direction);
@@ -264,12 +272,14 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 fishContainer = dinner.container;
                 points *= dinner.points;
               gameScreen.datasetchanged();
-              gameScreen.bubble(fishContainer.fish.getSize());
-                if (dinner.points!=1  ) {
+              if(fishContainer.fish.getSize()>0){
+                  gameScreen.bubble(fishContainer.fish.getSize());
+
+              }
+              if (dinner.points!=1  ) {
                     gameScreen.setPoints(points);
                 }
                 try {
-
                     Thread.sleep(timeout);
                     timeout=(int)(timeout*0.66);
                 } catch (InterruptedException e) {

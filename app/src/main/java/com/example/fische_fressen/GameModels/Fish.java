@@ -17,6 +17,7 @@ public class Fish {
         this.imageID=ImageID;
         this.size=isEmpty;
     }
+
     public Fish(){
 
     }

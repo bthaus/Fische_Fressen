@@ -19,6 +19,9 @@ public class FishContainer {
         this.fish.setSize(size);
         this.fish.setImageID(imgid);
     }
+    public FishContainer(Fish fish) {
+        this.fish=fish;
+    }
 
     public int getImgid() {
         return fish.getImageID();

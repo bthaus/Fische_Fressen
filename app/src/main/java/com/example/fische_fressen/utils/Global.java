@@ -35,6 +35,17 @@ public class Global {
     public static void setExplosionrange(int explosionrange) {
         Global.explosionrange = explosionrange;
     }
+    public static Fish getRandomFish(){
+        int rand = (int) (Math.random() * 1000) % 3;
+        switch (rand) {
+
+            case 0: return new Fish(R.drawable.yellowfish, 0);
+            case 1: return new Fish(R.drawable.bluefish, 1);
+            case 2:return new Fish(R.drawable.purplefish, 2);
+            default: Global.fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
+        }
+        return new Fish(R.drawable.bluefish, 1);
+    }
 
     public static String getUserName() {
         return userName;

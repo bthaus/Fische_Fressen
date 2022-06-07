@@ -40,7 +40,7 @@ public class GameScreen extends AppCompatActivity {
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
     FishAdapter adapter;
-    int difficulty=100;
+    int difficulty=150;
     TextView score;
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
@@ -58,25 +58,9 @@ public class GameScreen extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         });
         //LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
+        Global.fishContainerLinkedList.clear();
         for (int i = 0; i < 25; i++) {
-
-            int rand = (int) (Math.random() * 1000) % 5;
-            switch (rand) {
-                case 0:
-                case 4:
-                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish, 0));
-                    break;
-                case 1:
-                case 3:
-                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish, 1));
-                    break;
-                case 2:
-                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish, 2));
-                    break;
-
-                default:
-                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
-            }
+Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         }
 
         adapter = new FishAdapter(this,  Global.fishContainerLinkedList, defaultContainer);
@@ -100,6 +84,9 @@ public class GameScreen extends AppCompatActivity {
     public void win() {
         startActivity(new Intent(this, MainActivity.class));
     }
+    private void lose() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
     public void onRefill() {
         adapter.notifyDataSetChanged();
@@ -118,20 +105,26 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public class Bubblebar extends Thread{
+        boolean playing=true;
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
             binding.bubblebar.setProgress(100);
-            while(true){
+            while(playing){
                 try {
                     Thread.sleep(difficulty);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 binding.bubblebar.setProgress(binding.bubblebar.getProgress()-1,true);
+                if(binding.bubblebar.getProgress()==0){
+                    lose();
+                    playing=false;
+                }
             }
         }
     }
+
 
 
     public class reFiller extends Thread {
