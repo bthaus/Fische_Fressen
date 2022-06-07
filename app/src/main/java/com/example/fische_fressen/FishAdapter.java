@@ -3,6 +3,8 @@ package com.example.fische_fressen;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,7 +118,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
              logicRunner.start();
 
           }
-
+            Log.e("TAG", "onclicklistener done: ");
         });
         return listitemView;
     }
@@ -136,26 +138,33 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     }
 
     private void fallAll() {
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        for (int i = 19; i >= 0; i--) {
-            while (true) {
-                try {
-                    getItem(i).fall(getItem(i + 5));
-                } catch (BottomReachedException e) {
-                    break;
+        //calls the fallloop multiple times in case a fish gets stuck
+        for (int j=0;j<5;j++) {
+            for (int i = 19; i >= 0; i--) {
+                while (true) {
+                    try {
+                        getItem(i).fall(getItem(i + 5));
+                        gameScreen.datasetchanged();
+                    } catch (BottomReachedException e) {
+                        break;
+                    }
                 }
-            }
+                if(i%5==1&&j==0){
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
+            }
         }
+
 
     }
 
-
+    //extracted from the click listener because it would block the uithread
     class LogicRunner extends Thread{
         int position;
         public LogicRunner(int position) {
@@ -243,7 +252,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     public int eat(int position, int offset, FishContainer fishContainer) {
 
         Log.e("TAG", "offset " + offset);
-
+        Looper.prepare();
         int points = 2;
         try {
             while (true) {
@@ -253,9 +262,12 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 Dinner dinner = getItem(position).eat(fishContainer);
                 fishContainer = dinner.container;
                 points *= dinner.points;
-
+              gameScreen.datasetchanged();
+                if (dinner.points!=1  ) {
+                    gameScreen.setPoints(points);
+                }
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -268,9 +280,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             Log.e("TAG", "eat: cant be eaten" + position);
         }
 
-        if (points > 2) {
-            gameScreen.setPoints(points);
-        }
+
         return fishContainer.position;
     }
 }

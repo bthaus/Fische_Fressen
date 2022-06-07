@@ -88,6 +88,10 @@ public class GameScreen extends AppCompatActivity {
         reFiller.start();
 
     }
+    //to be called isntead of notifydatasetchanged because this runs on the uithread no matter where you called it from
+    public void datasetchanged(){
+        GameScreen.this.runOnUiThread(() -> adapter.notifyDataSetChanged());
+    }
 
     public void win() {
         startActivity(new Intent(this, MainActivity.class));
@@ -98,7 +102,10 @@ public class GameScreen extends AppCompatActivity {
     }
 
     public void setPoints(int points) {
-        scorepoints = scorepoints + points;
+        if(points!=scorepoints){
+            scorepoints = scorepoints + points;
+        }
+
         score.setText(String.valueOf(scorepoints));
     }
 
@@ -117,6 +124,7 @@ public class GameScreen extends AppCompatActivity {
                 Log.e("TAG", "refilling");
 
                 adapter.refill();
+                datasetchanged();
             }
         }
     }
