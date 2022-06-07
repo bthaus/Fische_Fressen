@@ -6,7 +6,7 @@ import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.utils.Dinner;
-import com.example.fische_fressen.utils.GlobalVariables;
+import com.example.fische_fressen.utils.Global;
 
 public class FishContainer {
 
@@ -15,7 +15,7 @@ public class FishContainer {
     Fish fish;
 
     public FishContainer(int imgid,int size) {
-        fish=new Fish(GlobalVariables.defaultFish);
+        fish=new Fish(Global.defaultFish);
         this.fish.setSize(size);
         this.fish.setImageID(imgid);
     }
@@ -36,7 +36,7 @@ public class FishContainer {
 
            this.fish.grow();
 
-           eater.fish=GlobalVariables.defaultFish;
+           eater.fish= Global.defaultFish;
 
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
@@ -46,7 +46,7 @@ public class FishContainer {
             this.fish= eater.fish;
 
 
-            eater.fish=GlobalVariables.defaultFish;
+            eater.fish= Global.defaultFish;
 
             Log.e("TAG", "current fishsize: "+this.fish.getSize() );
             Log.e("TAG", "fish eaten");
@@ -64,7 +64,7 @@ public class FishContainer {
         }
         if(destination.fish.getSize()==-2){
             destination.fish=this.fish;
-            this.fish=GlobalVariables.defaultFish;
+            this.fish= Global.defaultFish;
         }else{
             throw new BottomReachedException();
         }

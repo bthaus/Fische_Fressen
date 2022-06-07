@@ -1,7 +1,9 @@
 package com.example.fische_fressen;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.graphics.Matrix;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +17,12 @@ import android.widget.TextView;
 import androidx.core.view.MotionEventCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 
+import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Fish;
+import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
+import com.example.fische_fressen.utils.Dinner;
+import com.example.fische_fressen.utils.Global;
 
 import java.util.LinkedList;
 
@@ -49,34 +55,38 @@ public class GameScreen extends AppCompatActivity {
             adapter.refill();
             adapter.notifyDataSetChanged();
         });
-        LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
+        //LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
         for (int i = 0; i < 25; i++) {
 
             int rand = (int) (Math.random() * 1000) % 5;
             switch (rand) {
                 case 0:
                 case 4:
-                    fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish, 0));
+                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.yellowfish, 0));
                     break;
                 case 1:
                 case 3:
-                    fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish, 1));
+                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.bluefish, 1));
                     break;
                 case 2:
-                    fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish, 2));
+                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.purplefish, 2));
                     break;
 
                 default:
-                    fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
+                    Global.fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
             }
         }
 
-        adapter = new FishAdapter(this, fishContainerLinkedList, defaultContainer);
+        adapter = new FishAdapter(this,  Global.fishContainerLinkedList, defaultContainer);
         adapter.setGameScreen(this);
+
+
+
 
         grid.setAdapter(adapter);
         reFiller reFiller = new reFiller();
         reFiller.start();
+
     }
 
     public void win() {
@@ -96,6 +106,7 @@ public class GameScreen extends AppCompatActivity {
     public class reFiller extends Thread {
         @Override
         public void run() {
+
             while (true) {
                 try {
                     Log.e("TAG", "run: refiller ");

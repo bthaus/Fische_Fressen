@@ -1,11 +1,11 @@
 package com.example.fische_fressen.GameModels;
 
-import com.example.fische_fressen.utils.GlobalVariables;
+import com.example.fische_fressen.utils.Global;
 
 public class ExplosionFish extends Fish{
     int range;
     ExplosionFish(){
-        super.size= GlobalVariables.explosionrange;
+        super.size= Global.explosionrange;
     }
     enum Type{
         PufferFish,
