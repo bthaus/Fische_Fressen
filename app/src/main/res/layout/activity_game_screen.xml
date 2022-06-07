@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="bottom|center_horizontal"
     tools:context=".GameScreen">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -81,5 +82,12 @@
         android:textColor="#FFFFFF"
         android:textSize="34sp"
         android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/bubblebar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="173dp"
+        android:layout_gravity="bottom|center_horizontal" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

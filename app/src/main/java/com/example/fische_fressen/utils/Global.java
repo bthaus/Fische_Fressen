@@ -1,10 +1,13 @@
 package com.example.fische_fressen.utils;
 
+import com.example.fische_fressen.FishContainer;
 import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.GameModels.GameMode;
 import com.example.fische_fressen.R;
 
-public class GlobalVariables {
+import java.util.LinkedList;
+
+public class Global {
 
 
     public static int difficulty;
@@ -19,9 +22,10 @@ public class GlobalVariables {
     public static int getDifficulty() {
         return difficulty;
     }
+    public static LinkedList<FishContainer>fishContainerLinkedList=new LinkedList<>();
 
     public static void setDifficulty(int difficulty) {
-        GlobalVariables.difficulty = difficulty;
+        Global.difficulty = difficulty;
     }
 
     public static int getExplosionrange() {
@@ -29,7 +33,18 @@ public class GlobalVariables {
     }
 
     public static void setExplosionrange(int explosionrange) {
-        GlobalVariables.explosionrange = explosionrange;
+        Global.explosionrange = explosionrange;
+    }
+    public static Fish getRandomFish(){
+        int rand = (int) (Math.random() * 1000) % 3;
+        switch (rand) {
+
+            case 0: return new Fish(R.drawable.yellowfish, 0);
+            case 1: return new Fish(R.drawable.bluefish, 1);
+            case 2:return new Fish(R.drawable.purplefish, 2);
+            default: Global.fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
+        }
+        return new Fish(R.drawable.bluefish, 1);
     }
 
     public static String getUserName() {
@@ -37,7 +52,7 @@ public class GlobalVariables {
     }
 
     public static void setUserName(String userName) {
-        GlobalVariables.userName = userName;
+        Global.userName = userName;
     }
 
     public static String getID() {
@@ -45,7 +60,7 @@ public class GlobalVariables {
     }
 
     public static void setID(String ID) {
-        GlobalVariables.ID = ID;
+        Global.ID = ID;
     }
 
     public static GameMode getGameMode() {
@@ -53,7 +68,7 @@ public class GlobalVariables {
     }
 
     public static void setGameMode(GameMode gameMode) {
-        GlobalVariables.gameMode = gameMode;
+        Global.gameMode = gameMode;
     }
 
     public static int getRandomSeed() {
@@ -61,7 +76,7 @@ public class GlobalVariables {
     }
 
     public static void setRandomSeed(int randomSeed) {
-        GlobalVariables.randomSeed = randomSeed;
+        Global.randomSeed = randomSeed;
     }
 
 }

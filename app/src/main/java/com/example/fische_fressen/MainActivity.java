@@ -11,7 +11,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import com.example.fische_fressen.databinding.ActivityMainBinding;
-import com.example.fische_fressen.utils.GlobalVariables;
+import com.example.fische_fressen.utils.Global;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         initGlobalProps();
-        binding.displayUserName.setText(GlobalVariables.getUserName());
+        binding.displayUserName.setText(Global.getUserName());
 
         binding.startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                GlobalVariables.userName = input.getText().toString();
+                Global.userName = input.getText().toString();
                 saveGlobalProps(input.getText().toString());
                // binding.displayUserName.setText(GlobalVariables.getUserName());
                 initGlobalProps(); //Aktualisieren der entsprechenden Views
@@ -121,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
             }
             br.close();
             JSONObject json = new JSONObject(content.toString());
-            GlobalVariables.setUserName(json.getString("Username"));
-            binding.displayUserName.setText(GlobalVariables.getUserName());
+            Global.setUserName(json.getString("Username"));
+            binding.displayUserName.setText(Global.getUserName());
 
         } catch (Exception e){
-            GlobalVariables.userName = "NEW_USER";
+            Global.userName = "NEW_USER";
         }
     }
 
