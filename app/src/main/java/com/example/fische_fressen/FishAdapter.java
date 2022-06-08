@@ -257,6 +257,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
           explode(newPosition);
           int temp2=gameScreen.scorepoints;
           temp=temp2-temp;
+            Log.e("TAG", "explodepoints: "+temp );
           gameScreen.setPoints(-temp);
           gameScreen.setPoints(temp);
 
@@ -274,6 +275,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             explode(newPosition);
             int temp2=gameScreen.scorepoints;
             temp=temp2-temp;
+            Log.e("TAG", "explodepoints: "+temp );
             gameScreen.setPoints(-temp);
             gameScreen.setPoints(temp);
             try {

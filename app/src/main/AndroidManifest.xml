@@ -14,31 +14,38 @@
         <activity
             android:name=".StatisticScreen"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_statistic_screen"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar.NoActionBar" />
         <activity
             android:name=".WinScreen"
             android:exported="false"
             android:label="@string/title_activity_win_screen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar.NoActionBar" />
         <activity
             android:name=".DifficultyActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".TutorialActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".GameScreen"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_game_screen"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
         <activity
             android:name=".LobbyActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_lobby"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
