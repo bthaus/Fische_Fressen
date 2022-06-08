@@ -1,10 +1,15 @@
 package com.example.fische_fressen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +36,7 @@ import com.example.fische_fressen.utils.Global;
 
 import java.util.LinkedList;
 
-public class GameScreen extends AppCompatActivity {
+public class GameScreen extends AppCompatActivity implements SensorEventListener {
 
     private static final String DEBUG_TAG = "test";
     private AppBarConfiguration appBarConfiguration;
@@ -48,6 +53,9 @@ public class GameScreen extends AppCompatActivity {
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
 
+    private SensorManager sensorManager;
+    private Sensor lightSensor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Global.setGameScreen(this);
@@ -55,6 +63,11 @@ public class GameScreen extends AppCompatActivity {
 
         binding = ActivityGameScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //light sensor variables
+        sensorManager = (SensorManager) (getSystemService(Context.SENSOR_SERVICE));
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+        //light sensor variables end
         score = binding.scorepoints;
         GridView grid = binding.grid;
         binding.fab.setOnClickListener(view -> {
@@ -162,4 +175,48 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     public GameScreen getInstance() {
         return this;
     }
+
+    //Light Sensor
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        try {
+            float lightValue = sensorEvent.values[0];
+            if (lightValue < 200){
+                //No need to redraw fish if sleepyTime was true all the time
+                if(Global.isSleepytime() != true) {
+                    Global.setSleepytime(true);
+                    adapter.redrawAssets();
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            else{
+                if(Global.isSleepytime() != false) {
+                    Global.setSleepytime(false);
+                    adapter.redrawAssets();
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+        Log.i("Sensors", "Accuracy of sensor ${p0?.name} changed to p1");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        sensorManager.registerListener(this,lightSensor,SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+    //Light Sensor end
 }
