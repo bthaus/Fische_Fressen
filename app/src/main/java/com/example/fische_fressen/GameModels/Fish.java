@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.example.fische_fressen.R;
+import com.example.fische_fressen.utils.Global;
 
 public class Fish {
 
@@ -14,7 +15,7 @@ public class Fish {
         return imageID;
     }
     public Fish(int ImageID, int isEmpty){
-        this.imageID=ImageID;
+        this.setImageID(ImageID);
         this.size=isEmpty;
     }
 
@@ -23,9 +24,34 @@ public class Fish {
     }
     public Fish(Fish fish){
         this.size=fish.size;
-        this.imageID=fish.imageID;
+        setImageID(fish.imageID);
     }
     public void setImageID(int imageID) {
+
+        if(Global.sleepytime){
+            switch (imageID){
+                case R.drawable.bluefish :imageID=R.drawable.bluefishsleeps;break;
+                case R.drawable.bluefishselected: imageID=R.drawable.bluefishselectedsleeps;break;
+
+                case R.drawable.purplefish :imageID=R.drawable.purplefishsleeps;break;
+                case R.drawable.purplefishselected :imageID=R.drawable.purplefishselectedsleeps;break;
+
+                case R.drawable.redfish :imageID=R.drawable.redfishsleeps;break;
+                case R.drawable.redfishselected: imageID=R.drawable.redfishselectedsleeps;break;
+
+                case R.drawable.yellowfish :imageID=R.drawable.yellowfishsleeps;break;
+                case R.drawable.yellowfishselected :imageID=R.drawable.yellowfishselectedsleeps;break;
+
+
+                case R.drawable.mine: imageID=R.drawable.minesleeps;break;
+                case R.drawable.mineselected: imageID=R.drawable.mineselectedsleeps;break;
+
+
+                default: break;
+            }
+        }
+
+
         this.imageID = imageID;
     }
 

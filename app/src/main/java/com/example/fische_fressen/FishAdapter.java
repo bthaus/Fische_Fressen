@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
+import com.example.fische_fressen.Exceptions.WallReachedException;
 import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.utils.Dinner;
@@ -87,14 +88,20 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 case 3:
                     getItem(Global.lastClickedPosition).setImgid(R.drawable.redfish);
                     break;
-                case 5: getItem(Global.lastClickedPosition).setImgid(R.drawable.min);
+                case 5: getItem(Global.lastClickedPosition).setImgid(R.drawable.mine);
                 break;
             }
           notifyDataSetChanged();
             return true;
         }
     }
+    public void redrawAssets(){
+        for (int i = 0; i < 25; i++) {
+            getItem(i).fish.setImageID(getItem(i).getImgid());
+        }
+        gameScreen.datasetchanged();
 
+    }
     @SuppressLint("ClickableViewAccessibility")
     @NonNull
     @Override
@@ -185,10 +192,11 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         public void run() {
 
             sendfish(position);
-            fallAll();
+
             if (checkVictory()) {
                 gameScreen.win();
             }
+            fallAll();
             Global.lastClickedPosition = -1;
             logicDone=true;
 
@@ -244,13 +252,24 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         FishContainer fish=getItem(position); //the fishcontainer you clicked
         Movement.Direction direction=getDirection(position,newPosition); //get the firection
         if (position == newPosition && fish.fish.getSize() == 3) {
-            fish.fish = Global.defaultFish;
-            gameScreen.setPoints(10);
-            gameScreen.bubble(5);
+          explode(newPosition);
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameScreen.datasetchanged();
             return;
         }
         if(position==newPosition && fish.fish.getSize()==5){
             explode(newPosition);
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            gameScreen.datasetchanged();
+            return;
         }
         Log.e("TAG", "offset " + direction);
         int offset = 0;
@@ -343,6 +362,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         int timeout=300;
         try {
             while (true) {
+
                 //calculate offset
                 position += offset;
                 //get item of newly calculated position and execute eat
@@ -364,12 +384,16 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                     e.printStackTrace();
                 }
 
-
+            if(dinner.wallreached){
+                break;
+            }
             }
         } catch (IndexOutOfBoundsException e) {
             Log.e("TAG", "wall reached: " + position);
         } catch (FishCantEatOtherFishException e) {
             Log.e("TAG", "eat: cant be eaten" + position);
+        } catch (WallReachedException e) {
+            e.printStackTrace();
         }
 
 

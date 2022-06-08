@@ -2,7 +2,9 @@ package com.example.fische_fressen;
 
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.GameModels.Fish;
+import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
 import com.example.fische_fressen.utils.Dinner;
@@ -40,7 +43,7 @@ public class GameScreen extends AppCompatActivity {
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
     FishAdapter adapter;
-    int difficulty=150;
+    int difficulty=Global.difficultyValue;
     TextView score;
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
@@ -86,9 +89,13 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     }
 
     public void win() {
-        startActivity(new Intent(this, MainActivity.class));
+        GameStatistics.setHighscore(scorepoints);
+        startActivity(
+                new Intent(this, MainActivity.class));
     }
     private void lose() {
+        GameStatistics.setHighscore(scorepoints);
+        GameStatistics.print();
         startActivity(new Intent(this, MainActivity.class));
     }
 
@@ -100,6 +107,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         if(points!=scorepoints){
             scorepoints = scorepoints + points;
         }
+        GameStatistics.addPoints(points);
 
         score.setText(String.valueOf(scorepoints));
     }
@@ -113,6 +121,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
+            binding.bubblebar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
             binding.bubblebar.setProgress(100);
             while(playing){
                 try {
