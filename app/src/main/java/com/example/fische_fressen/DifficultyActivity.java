@@ -18,6 +18,8 @@ public class DifficultyActivity extends AppCompatActivity {
         binding = ActivityDifficultyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.displayUserName.setText(Global.getUserName());
+
         binding.easyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

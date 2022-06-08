@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import com.example.fische_fressen.databinding.ActivityMainBinding;
@@ -103,15 +104,16 @@ public class MainActivity extends AppCompatActivity {
     //Username und später eventuelle andere persistente Daten werden in einem kleinem File gespeichert
     private void saveGlobalProps(String username){
         try {
-            OutputStreamWriter osw = new OutputStreamWriter(getApplicationContext().openFileOutput("persistentSettings.json", Context.MODE_PRIVATE));
-            osw.write("Username");
-            osw.write(username);
+            OutputStreamWriter osw = new OutputStreamWriter(getApplicationContext().openFileOutput("data.json", Context.MODE_PRIVATE));
+            JSONObject object = new JSONObject();
+            object.put("username" , username);
+            osw.write(object.toString());
             osw.close();
         } catch (Exception e) {
         }
     }
     private void initGlobalProps(){
-        File file = new File(getApplicationContext().getFilesDir(), "persistentSettings.json");
+        File file = new File(getApplicationContext().getFilesDir(), "data.json");
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             StringBuilder content = new StringBuilder();
@@ -121,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
             }
             br.close();
             JSONObject json = new JSONObject(content.toString());
-            Global.setUserName(json.getString("Username"));
+            Global.setUserName(json.getString("username"));
             binding.displayUserName.setText(Global.getUserName());
-
         } catch (Exception e){
-            Global.userName = "NEW_USER";
+            Log.i("FILE READ ERROR" , e.toString());
+            Global.setUserName("NEW_USER");
         }
     }
 

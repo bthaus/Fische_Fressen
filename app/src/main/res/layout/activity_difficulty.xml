@@ -57,6 +57,7 @@
         android:id="@+id/displayUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:text="User: newUser"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
