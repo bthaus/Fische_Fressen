@@ -2,7 +2,11 @@ package com.example.fische_fressen.GameModels;
 
 import android.util.Log;
 
+import com.example.fische_fressen.utils.Difficulty;
 import com.example.fische_fressen.utils.Global;
+import com.example.fische_fressen.utils.StatisticBundle;
+
+import java.util.LinkedList;
 
 public class GameStatistics {
     public static class EasyStatistics{
@@ -21,6 +25,8 @@ public class GameStatistics {
         private static  int totalpoints;
 
         private static  int Highscore;
+
+        private static int movesMade;
 
 
 
@@ -71,6 +77,10 @@ public class GameStatistics {
             Log.d("totalpoints:", String.valueOf(totalpoints));
             Log.d("highscore:", String.valueOf(Highscore));
         }
+
+        public static void makeTurn() {
+            movesMade++;
+        }
     }
     public static class MediumStatistics{
         private static int numberOfYellowFishEaten;
@@ -88,9 +98,13 @@ public class GameStatistics {
         private static  int totalpoints;
 
         private static  int Highscore;
+        private static  int movesMade;
 
 
+        public static void makeTurn() {
 
+            movesMade++;
+        }
         public static void setHighscore(int highscore){
             if(highscore>Highscore){
                 Highscore=highscore;
@@ -154,8 +168,12 @@ public class GameStatistics {
         private static  int totalpoints;
 
         private static  int Highscore;
+        private static  int movesMade;
 
+        public static void makeTurn() {
 
+            movesMade++;
+        }
 
         public static void setHighscore(int highscore){
             if(highscore>Highscore){
@@ -205,6 +223,54 @@ public class GameStatistics {
         }
     }
     public static class TotalStatistics{
+        public static int getNumberOfYellowFishEaten() {
+            return numberOfYellowFishEaten;
+        }
+
+        public static int getNumberOfBlueFishEaten() {
+            return numberOfBlueFishEaten;
+        }
+
+        public static int getNumberOfPurpleFishEaten() {
+            return numberOfPurpleFishEaten;
+        }
+
+        public static int getNumberOfYellowFishExploded() {
+            return numberOfYellowFishExploded;
+        }
+
+        public static int getNumberOfBlueFishExploded() {
+            return numberOfBlueFishExploded;
+        }
+
+        public static int getNumberOfPurpleFishExploded() {
+            return numberOfPurpleFishExploded;
+        }
+
+        public static int getNumberOfRedFishExploded() {
+            return numberOfRedFishExploded;
+        }
+
+        public static int getNumberOfMinesExploded() {
+            return numberOfMinesExploded;
+        }
+
+        public static int getHighestPointsInOneTurn() {
+            return highestPointsInOneTurn;
+        }
+
+        public static int getTotalpoints() {
+            return totalpoints;
+        }
+
+        public static int getHighscore() {
+            return Highscore;
+        }
+
+        public static int getMovesMade() {
+            return movesMade;
+        }
+
         private static int numberOfYellowFishEaten;
         private static int numberOfBlueFishEaten;
         private static int numberOfPurpleFishEaten;
@@ -220,8 +286,12 @@ public class GameStatistics {
         private static  int totalpoints;
 
         private static  int Highscore;
+        private static  int movesMade;
 
+        public static void makeTurn() {
 
+            movesMade++;
+        }
 
         public static void setHighscore(int highscore){
             if(highscore>Highscore){
@@ -287,7 +357,14 @@ public class GameStatistics {
         }
         TotalStatistics.fishEaten(fish);
     }
-
+    public static void makeTurn(){
+        switch (Global.difficulty){
+            case EASY:EasyStatistics.makeTurn();break;
+            case MEDIUM:MediumStatistics.makeTurn();break;
+            case HARD:HardStatistics.makeTurn();break;
+        }
+        TotalStatistics.makeTurn();
+    }
     public static void fishExploded(Fish fish){
         switch (Global.difficulty){
             case EASY:EasyStatistics.fishExploded(fish);break;
@@ -317,6 +394,9 @@ public class GameStatistics {
         TotalStatistics.print();
     }
 
+    public static LinkedList<StatisticBundle> getBundles(Difficulty difficulty){
+        LinkedList<StatisticBundle>bundles=new LinkedList<>();
+    }
 
 
 }

@@ -3,6 +3,7 @@ package com.example.fische_fressen;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.utils.Global;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,6 +25,7 @@ public class WinScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GameStatistics.makePermanent();
         Global.playing=false;
         super.onCreate(savedInstanceState);
 

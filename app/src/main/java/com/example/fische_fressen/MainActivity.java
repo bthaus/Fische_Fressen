@@ -59,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
                startTutorial();
            }
        });
+       binding.statistics.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               startActivity(new Intent(view.getContext(),StatisticScreen.class));
+           }
+       });
 
     }
 

@@ -19,6 +19,7 @@ import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.Exceptions.WallReachedException;
 import com.example.fische_fressen.GameModels.Fish;
+import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.utils.Dinner;
 import com.example.fische_fressen.utils.Global;
@@ -247,7 +248,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     }
 
     public void sendfish(int newPosition) {
-
+        GameStatistics.makeTurn();
         int position=Global.lastClickedPosition;
         FishContainer fish=getItem(position); //the fishcontainer you clicked
         Movement.Direction direction=getDirection(position,newPosition); //get the firection
