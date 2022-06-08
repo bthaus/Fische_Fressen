@@ -21,8 +21,11 @@ public class Global {
     public static int lastClickedPosition=-1;
     public static Fish defaultFish=new Fish(R.drawable.empty,-2);
     public static int scorePoints=0;
-    public static int difficultyValue=150;
+    public static int difficultyValue=90;
     public static Difficulty difficulty=Difficulty.HARD;
+    public static boolean won=false;
+    public static boolean playing;
+
 
     public static boolean isSleepytime() {
         return sleepytime;

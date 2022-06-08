@@ -13,4 +13,7 @@
     <string name="title_activity_game_screen">GameScreen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_win_screen">WinScreen</string>
+    <string name="game_won">You Won!</string>
+    <string name="game_lost">You lost :(</string>
 </resources>

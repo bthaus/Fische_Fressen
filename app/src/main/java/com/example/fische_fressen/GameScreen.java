@@ -52,12 +52,15 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     TextView score;
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
+    reFiller reFiller;
+    Bubblebar bubblebar;
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Global.playing=true;
         Global.setGameScreen(this);
         super.onCreate(savedInstanceState);
 
@@ -90,9 +93,9 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
 
 
         grid.setAdapter(adapter);
-        reFiller reFiller = new reFiller();
+        reFiller = new reFiller();
         reFiller.start();
-        Bubblebar bubblebar=new Bubblebar();
+        bubblebar=new Bubblebar();
         bubblebar.start();
 
     }
@@ -103,13 +106,17 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
 
     public void win() {
         GameStatistics.setHighscore(scorepoints);
+        Global.won=true;
+        Global.scorePoints=scorepoints;
         startActivity(
-                new Intent(this, MainActivity.class));
+                new Intent(this, WinScreen.class));
     }
     private void lose() {
         GameStatistics.setHighscore(scorepoints);
         GameStatistics.print();
-        startActivity(new Intent(this, MainActivity.class));
+        Global.scorePoints=scorepoints;
+        Global.won=false;
+        startActivity(new Intent(this, WinScreen.class));
     }
 
     public void onRefill() {
@@ -122,7 +129,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         }
         GameStatistics.addPoints(points);
 
-        score.setText(String.valueOf(scorepoints));
+        GameScreen.this.runOnUiThread(() -> score.setText(String.valueOf(scorepoints)));
     }
 
     public void bubble(int size) {
@@ -130,13 +137,13 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     }
 
     public class Bubblebar extends Thread{
-        boolean playing=true;
+
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
             binding.bubblebar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
             binding.bubblebar.setProgress(100);
-            while(playing){
+            while(Global.playing){
                 try {
                     Thread.sleep(difficulty);
                 } catch (InterruptedException e) {
@@ -145,7 +152,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
                 binding.bubblebar.setProgress(binding.bubblebar.getProgress()-1,true);
                 if(binding.bubblebar.getProgress()==0){
                     lose();
-                    playing=false;
+
                 }
             }
         }
@@ -157,7 +164,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         @Override
         public void run() {
 
-            while (true) {
+            while (Global.playing) {
                 try {
                     Log.e("TAG", "run: refiller ");
                     Thread.sleep(60000);
