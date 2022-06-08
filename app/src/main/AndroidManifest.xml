@@ -12,15 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fische_Fressen.NoActionBar">
         <activity
-<<<<<<< HEAD
+
             android:name=".WinScreen"
             android:exported="false"
             android:label="@string/title_activity_win_screen"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar.NoActionBar" />
-=======
+        <activity
             android:name=".DifficultyActivity"
             android:exported="false" />
->>>>>>> master
+
         <activity
             android:name=".TutorialActivity"
             android:exported="false" />
@@ -34,24 +34,7 @@
             android:exported="false"
             android:label="@string/title_activity_lobby"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
-        <activity
-            android:name=".Views.LobbyActivity"
-            android:exported="false"
-            android:label="@string/title_activity_lobby"
-            android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
-        <activity
-            android:name=".Views.GameScreen"
-            android:exported="false"
-            android:label="@string/title_activity_game_screen"
-            android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
-        <activity
-            android:name=".Views.GameActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Views.SetNameActivity"
-            android:exported="false"
-            android:label="@string/title_activity_set_name"
-            android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
