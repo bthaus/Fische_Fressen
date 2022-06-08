@@ -10,6 +10,58 @@ import java.util.LinkedList;
 
 public class GameStatistics {
     public static class EasyStatistics{
+        public static int getNumberOfYellowFishEaten() {
+            return numberOfYellowFishEaten;
+        }
+        public static int getGamesWon() {
+            return gamesWon;
+        }
+
+        private static int gamesWon;
+        public static int getNumberOfBlueFishEaten() {
+            return numberOfBlueFishEaten;
+        }
+
+        public static int getNumberOfPurpleFishEaten() {
+            return numberOfPurpleFishEaten;
+        }
+
+        public static int getNumberOfYellowFishExploded() {
+            return numberOfYellowFishExploded;
+        }
+
+        public static int getNumberOfBlueFishExploded() {
+            return numberOfBlueFishExploded;
+        }
+
+        public static int getNumberOfPurpleFishExploded() {
+            return numberOfPurpleFishExploded;
+        }
+
+        public static int getNumberOfRedFishExploded() {
+            return numberOfRedFishExploded;
+        }
+
+        public static int getNumberOfMinesExploded() {
+            return numberOfMinesExploded;
+        }
+
+        public static int getHighestPointsInOneTurn() {
+            return highestPointsInOneTurn;
+        }
+
+        public static int getTotalpoints() {
+            return totalpoints;
+        }
+
+        public static int getHighscore() {
+            return Highscore;
+        }
+
+        public static int getMovesMade() {
+            return movesMade;
+        }
+
         private static int numberOfYellowFishEaten;
         private static int numberOfBlueFishEaten;
         private static int numberOfPurpleFishEaten;
@@ -83,6 +135,58 @@ public class GameStatistics {
         }
     }
     public static class MediumStatistics{
+        public static int getNumberOfYellowFishEaten() {
+            return numberOfYellowFishEaten;
+        }
+        public static int getGamesWon() {
+            return gamesWon;
+        }
+
+        private static int gamesWon;
+        public static int getNumberOfBlueFishEaten() {
+            return numberOfBlueFishEaten;
+        }
+
+        public static int getNumberOfPurpleFishEaten() {
+            return numberOfPurpleFishEaten;
+        }
+
+        public static int getNumberOfYellowFishExploded() {
+            return numberOfYellowFishExploded;
+        }
+
+        public static int getNumberOfBlueFishExploded() {
+            return numberOfBlueFishExploded;
+        }
+
+        public static int getNumberOfPurpleFishExploded() {
+            return numberOfPurpleFishExploded;
+        }
+
+        public static int getNumberOfRedFishExploded() {
+            return numberOfRedFishExploded;
+        }
+
+        public static int getNumberOfMinesExploded() {
+            return numberOfMinesExploded;
+        }
+
+        public static int getHighestPointsInOneTurn() {
+            return highestPointsInOneTurn;
+        }
+
+        public static int getTotalpoints() {
+            return totalpoints;
+        }
+
+        public static int getHighscore() {
+            return Highscore;
+        }
+
+        public static int getMovesMade() {
+            return movesMade;
+        }
+
         private static int numberOfYellowFishEaten;
         private static int numberOfBlueFishEaten;
         private static int numberOfPurpleFishEaten;
@@ -153,6 +257,58 @@ public class GameStatistics {
         }
     }
     public static class HardStatistics{
+        public static int getNumberOfYellowFishEaten() {
+            return numberOfYellowFishEaten;
+        }
+        public static int getGamesWon() {
+            return gamesWon;
+        }
+
+        private static int gamesWon;
+        public static int getNumberOfBlueFishEaten() {
+            return numberOfBlueFishEaten;
+        }
+
+        public static int getNumberOfPurpleFishEaten() {
+            return numberOfPurpleFishEaten;
+        }
+
+        public static int getNumberOfYellowFishExploded() {
+            return numberOfYellowFishExploded;
+        }
+
+        public static int getNumberOfBlueFishExploded() {
+            return numberOfBlueFishExploded;
+        }
+
+        public static int getNumberOfPurpleFishExploded() {
+            return numberOfPurpleFishExploded;
+        }
+
+        public static int getNumberOfRedFishExploded() {
+            return numberOfRedFishExploded;
+        }
+
+        public static int getNumberOfMinesExploded() {
+            return numberOfMinesExploded;
+        }
+
+        public static int getHighestPointsInOneTurn() {
+            return highestPointsInOneTurn;
+        }
+
+        public static int getTotalpoints() {
+            return totalpoints;
+        }
+
+        public static int getHighscore() {
+            return Highscore;
+        }
+
+        public static int getMovesMade() {
+            return movesMade;
+        }
+
         private static int numberOfYellowFishEaten;
         private static int numberOfBlueFishEaten;
         private static int numberOfPurpleFishEaten;
@@ -275,6 +431,12 @@ public class GameStatistics {
         private static int numberOfBlueFishEaten;
         private static int numberOfPurpleFishEaten;
 
+        public static int getGamesWon() {
+            return gamesWon;
+        }
+
+        private static int gamesWon;
+
 
         private static int numberOfYellowFishExploded;
         private static int numberOfBlueFishExploded;
@@ -393,10 +555,79 @@ public class GameStatistics {
         HardStatistics.print();
         TotalStatistics.print();
     }
-
-    public static LinkedList<StatisticBundle> getBundles(Difficulty difficulty){
-        LinkedList<StatisticBundle>bundles=new LinkedList<>();
+    public static void gameWon(){
+        switch (Global.difficulty){
+            case EASY:EasyStatistics.gamesWon++;break;
+            case MEDIUM:MediumStatistics.gamesWon++;break;
+            case HARD:HardStatistics.gamesWon++;break;
+        }
+        TotalStatistics.gamesWon++;
     }
 
+
+    public static LinkedList<StatisticBundle> getBundles(){
+        LinkedList<StatisticBundle>bundles=new LinkedList<>();
+
+        bundles.add(new StatisticBundle("Total Statistics", ""));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Highscore:  ", Integer.toString(TotalStatistics.getHighscore())));
+        bundles.add(new StatisticBundle("Games won:  ", Integer.toString(TotalStatistics.getGamesWon())));
+        bundles.add(new StatisticBundle("Yellow Fish eaten: ", Integer.toString(TotalStatistics.getNumberOfYellowFishEaten())));
+        bundles.add(new StatisticBundle("Blue Fish eaten: ", Integer.toString(TotalStatistics.getNumberOfBlueFishEaten())));
+        bundles.add(new StatisticBundle("Purple Fish eaten: ", Integer.toString(TotalStatistics.getNumberOfPurpleFishEaten())));
+        bundles.add(new StatisticBundle("Yellow Fish Exploded: ", Integer.toString(TotalStatistics.getNumberOfYellowFishExploded())));
+        bundles.add(new StatisticBundle("Blue Fish Exploded: ", Integer.toString(TotalStatistics.getNumberOfBlueFishExploded())));
+        bundles.add(new StatisticBundle("Purple Fish Exploded: ", Integer.toString(TotalStatistics.getNumberOfPurpleFishExploded())));
+        bundles.add(new StatisticBundle("Red Fish Exploded: ", Integer.toString(TotalStatistics.getNumberOfRedFishExploded())));
+        bundles.add(new StatisticBundle("Mines Exploded: ", Integer.toString(TotalStatistics.getNumberOfMinesExploded())));
+        bundles.add(new StatisticBundle("Highest Points/turn: ", Integer.toString(TotalStatistics.getHighestPointsInOneTurn())));
+        bundles.add(new StatisticBundle("Moves made:  ", Integer.toString(TotalStatistics.getMovesMade())));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Easy Statistics", ""));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Highscore:  ", Integer.toString(EasyStatistics.getHighscore())));
+        bundles.add(new StatisticBundle("Games won:  ", Integer.toString(EasyStatistics.getGamesWon())));
+        bundles.add(new StatisticBundle("Yellow Fish eaten: ", Integer.toString(EasyStatistics.getNumberOfYellowFishEaten())));
+        bundles.add(new StatisticBundle("Blue Fish eaten: ", Integer.toString(EasyStatistics.getNumberOfBlueFishEaten())));
+        bundles.add(new StatisticBundle("Purple Fish eaten: ", Integer.toString(EasyStatistics.getNumberOfPurpleFishEaten())));
+        bundles.add(new StatisticBundle("Yellow Fish Exploded: ", Integer.toString(EasyStatistics.getNumberOfYellowFishExploded())));
+        bundles.add(new StatisticBundle("Blue Fish Exploded: ", Integer.toString(EasyStatistics.getNumberOfBlueFishExploded())));
+        bundles.add(new StatisticBundle("Purple Fish Exploded: ", Integer.toString(EasyStatistics.getNumberOfPurpleFishExploded())));
+        bundles.add(new StatisticBundle("Red Fish Exploded: ", Integer.toString(EasyStatistics.getNumberOfRedFishExploded())));
+        bundles.add(new StatisticBundle("Mines Exploded: ", Integer.toString(EasyStatistics.getNumberOfMinesExploded())));
+        bundles.add(new StatisticBundle("Highest Points/turn: ", Integer.toString(EasyStatistics.getHighestPointsInOneTurn())));
+        bundles.add(new StatisticBundle("Moves made:  ", Integer.toString(EasyStatistics.getMovesMade())));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Medium Statistics", ""));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Highscore:  ", Integer.toString(MediumStatistics.getHighscore())));
+        bundles.add(new StatisticBundle("Games won:  ", Integer.toString(MediumStatistics.getGamesWon())));
+        bundles.add(new StatisticBundle("Yellow Fish eaten: ", Integer.toString(MediumStatistics.getNumberOfYellowFishEaten())));
+        bundles.add(new StatisticBundle("Blue Fish eaten: ", Integer.toString(MediumStatistics.getNumberOfBlueFishEaten())));
+        bundles.add(new StatisticBundle("Purple Fish eaten: ", Integer.toString(MediumStatistics.getNumberOfPurpleFishEaten())));
+        bundles.add(new StatisticBundle("Yellow Fish Exploded: ", Integer.toString(MediumStatistics.getNumberOfYellowFishExploded())));
+        bundles.add(new StatisticBundle("Blue Fish Exploded: ", Integer.toString(MediumStatistics.getNumberOfBlueFishExploded())));
+        bundles.add(new StatisticBundle("Purple Fish Exploded: ", Integer.toString(MediumStatistics.getNumberOfPurpleFishExploded())));
+        bundles.add(new StatisticBundle("Red Fish Exploded: ", Integer.toString(MediumStatistics.getNumberOfRedFishExploded())));
+        bundles.add(new StatisticBundle("Mines Exploded: ", Integer.toString(MediumStatistics.getNumberOfMinesExploded())));
+        bundles.add(new StatisticBundle("Highest Points/turn: ", Integer.toString(MediumStatistics.getHighestPointsInOneTurn())));
+        bundles.add(new StatisticBundle("Moves made:  ", Integer.toString(MediumStatistics.getMovesMade())));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Hard Statistics", ""));
+        bundles.add(new StatisticBundle("",""));
+        bundles.add(new StatisticBundle("Highscore:  ", Integer.toString(HardStatistics.getHighscore())));
+        bundles.add(new StatisticBundle("Games won:  ", Integer.toString(HardStatistics.getGamesWon())));
+        bundles.add(new StatisticBundle("Yellow Fish eaten: ", Integer.toString(HardStatistics.getNumberOfYellowFishEaten())));
+        bundles.add(new StatisticBundle("Blue Fish eaten: ", Integer.toString(HardStatistics.getNumberOfBlueFishEaten())));
+        bundles.add(new StatisticBundle("Purple Fish eaten: ", Integer.toString(HardStatistics.getNumberOfPurpleFishEaten())));
+        bundles.add(new StatisticBundle("Yellow Fish Exploded: ", Integer.toString(HardStatistics.getNumberOfYellowFishExploded())));
+        bundles.add(new StatisticBundle("Blue Fish Exploded: ", Integer.toString(HardStatistics.getNumberOfBlueFishExploded())));
+        bundles.add(new StatisticBundle("Purple Fish Exploded: ", Integer.toString(HardStatistics.getNumberOfPurpleFishExploded())));
+        bundles.add(new StatisticBundle("Red Fish Exploded: ", Integer.toString(HardStatistics.getNumberOfRedFishExploded())));
+        bundles.add(new StatisticBundle("Mines Exploded: ", Integer.toString(HardStatistics.getNumberOfMinesExploded())));
+        bundles.add(new StatisticBundle("Highest Points/turn: ", Integer.toString(HardStatistics.getHighestPointsInOneTurn())));
+        bundles.add(new StatisticBundle("Moves made:  ", Integer.toString(HardStatistics.getMovesMade())));
+        return bundles;
+    }
 
 }

@@ -107,6 +107,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     public void win() {
         GameStatistics.setHighscore(scorepoints);
         Global.won=true;
+        GameStatistics.gameWon();
         Global.scorePoints=scorepoints;
         startActivity(
                 new Intent(this, WinScreen.class));

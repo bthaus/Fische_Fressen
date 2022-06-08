@@ -3,6 +3,7 @@ package com.example.fische_fressen;
 import android.os.Bundle;
 
 import com.example.fische_fressen.GameModels.GameStatistics;
+import com.example.fische_fressen.utils.Difficulty;
 import com.example.fische_fressen.utils.MyRecyclerViewAdapter;
 import com.example.fische_fressen.utils.StatisticBundle;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,19 +35,13 @@ public class StatisticScreen extends AppCompatActivity  {
 
         binding = ActivityStatisticScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        LinkedList<StatisticBundle> bundles=new LinkedList<>();
-        bundles.add(new StatisticBundle("RedFish Popped", Integer.toString(GameStatistics.TotalStatistics.getNumberOfRedFishExploded())));
-        ArrayList<String> animalNames = new ArrayList<>();
-        animalNames.add("Horse");
-        animalNames.add("Cow");
-        animalNames.add("Camel");
-        animalNames.add("Sheep");
-        animalNames.add("Goat");
+
+
 
         // set up the RecyclerView
         RecyclerView recyclerView = binding.recyclerview;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, bundles);
+        adapter = new MyRecyclerViewAdapter(this, GameStatistics.getBundles());
 
         recyclerView.setAdapter(adapter);
     }
