@@ -12,10 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fische_Fressen.NoActionBar">
         <activity
+<<<<<<< HEAD
             android:name=".WinScreen"
             android:exported="false"
             android:label="@string/title_activity_win_screen"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar.NoActionBar" />
+=======
+            android:name=".DifficultyActivity"
+            android:exported="false" />
+>>>>>>> master
         <activity
             android:name=".TutorialActivity"
             android:exported="false" />

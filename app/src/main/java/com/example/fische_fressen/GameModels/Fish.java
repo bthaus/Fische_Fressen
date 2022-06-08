@@ -28,7 +28,7 @@ public class Fish {
     }
     public void setImageID(int imageID) {
 
-        if(Global.sleepytime){
+        if(Global.isSleepytime()){
             switch (imageID){
                 case R.drawable.bluefish :imageID=R.drawable.bluefishsleeps;break;
                 case R.drawable.bluefishselected: imageID=R.drawable.bluefishselectedsleeps;break;
@@ -45,6 +45,28 @@ public class Fish {
 
                 case R.drawable.mine: imageID=R.drawable.minesleeps;break;
                 case R.drawable.mineselected: imageID=R.drawable.mineselectedsleeps;break;
+
+
+                default: break;
+            }
+        }
+        else{
+            switch (imageID){
+                case R.drawable.bluefishsleeps:imageID=R.drawable.bluefish;break;
+                case R.drawable.bluefishselectedsleeps: imageID=R.drawable.bluefishselected;break;
+
+                case R.drawable.purplefishsleeps:imageID=R.drawable.purplefish;break;
+                case R.drawable.purplefishselectedsleeps:imageID=R.drawable.purplefishselected;break;
+
+                case R.drawable.redfishsleeps :imageID=R.drawable.redfish;break;
+                case R.drawable.redfishselectedsleeps: imageID=R.drawable.redfishselected;break;
+
+                case R.drawable.yellowfishsleeps :imageID=R.drawable.yellowfish;break;
+                case R.drawable.yellowfishselectedsleeps:imageID=R.drawable.yellowfishselected;break;
+
+
+                case R.drawable.minesleeps: imageID=R.drawable.mine;break;
+                case R.drawable.mineselectedsleeps: imageID=R.drawable.mineselected;break;
 
 
                 default: break;
