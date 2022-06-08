@@ -253,7 +253,14 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         FishContainer fish=getItem(position); //the fishcontainer you clicked
         Movement.Direction direction=getDirection(position,newPosition); //get the firection
         if (position == newPosition && fish.fish.getSize() == 3) {
+            int temp=gameScreen.scorepoints;
           explode(newPosition);
+          int temp2=gameScreen.scorepoints;
+          temp=temp2-temp;
+          gameScreen.setPoints(-temp);
+          gameScreen.setPoints(temp);
+
+
             try {
                 Thread.sleep(300);
             } catch (InterruptedException e) {
@@ -263,7 +270,12 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             return;
         }
         if(position==newPosition && fish.fish.getSize()==5){
+            int temp=gameScreen.scorepoints;
             explode(newPosition);
+            int temp2=gameScreen.scorepoints;
+            temp=temp2-temp;
+            gameScreen.setPoints(-temp);
+            gameScreen.setPoints(temp);
             try {
                 Thread.sleep(150);
             } catch (InterruptedException e) {
