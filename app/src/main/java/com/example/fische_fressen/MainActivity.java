@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: Lobby später dazwischenschalten (Eigene Assets für Lobby-Schrift fehlen leider :/ )
-                startSinglePlayer();
+                selectDifficulty();
             }
         });
         binding.optionsButton.setOnClickListener(new View.OnClickListener() {
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void startSinglePlayer(){
-        startActivity(new Intent(this,GameScreen.class));
+    public void selectDifficulty(){
+        startActivity(new Intent(this,DifficultyActivity.class));
     }
 
     public void enterName(){
