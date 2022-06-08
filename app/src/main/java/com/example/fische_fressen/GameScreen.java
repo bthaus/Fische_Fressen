@@ -109,7 +109,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         }
         GameStatistics.addPoints(points);
 
-        score.setText(String.valueOf(scorepoints));
+        GameScreen.this.runOnUiThread(() -> score.setText(String.valueOf(scorepoints)));
     }
 
     public void bubble(int size) {
