@@ -24,7 +24,7 @@ public class Global {
     public static int difficultyValue=90;
     public static Difficulty difficulty=Difficulty.HARD;
     public static boolean won=false;
-    public static boolean playing;
+    public static boolean playing=false;
 
 
     public static boolean isSleepytime() {

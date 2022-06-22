@@ -110,14 +110,15 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         GameStatistics.gameWon();
         Global.scorePoints=scorepoints;
         startActivity(
-                new Intent(this, WinScreen.class));
+                new Intent(this, WinScreen.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
     private void lose() {
         GameStatistics.setHighscore(scorepoints);
         GameStatistics.print();
         Global.scorePoints=scorepoints;
         Global.won=false;
-        startActivity(new Intent(this, WinScreen.class));
+        startActivity(
+                new Intent(this, WinScreen.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 
     public void onRefill() {

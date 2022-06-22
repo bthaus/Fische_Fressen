@@ -39,10 +39,6 @@ public class WinScreen extends AppCompatActivity {
         binding.totalpoints.setText(String.valueOf(Global.scorePoints));
         binding.backtomainmenue.setOnClickListener(view -> startActivity(new Intent(view.getContext(), MainActivity.class)));
 
-
-
-
-
     }
 
 

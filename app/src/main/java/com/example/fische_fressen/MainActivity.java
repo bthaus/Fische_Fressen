@@ -136,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
             Global.setUserName("NEW_USER");
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Global.playing=false;
+    }
 
 
 
