@@ -48,11 +48,11 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     //ganzes spielfeld als fragment umsetzen, je nach modus anderes fragment
     //score und spielerliste sind dann ein overlay unabhängig vom spielmodus
     FishAdapter adapter;
-    int difficulty=Global.difficultyValue;
+    int difficulty = Global.difficultyValue;
     TextView score;
     int scorepoints = 0;
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
-    reFiller reFiller;
+
     Bubblebar bubblebar;
 
     private SensorManager sensorManager;
@@ -60,7 +60,7 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Global.playing=true;
+        Global.playing = true;
         Global.setGameScreen(this);
         super.onCreate(savedInstanceState);
 
@@ -83,40 +83,38 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
         //LinkedList<FishContainer> fishContainerLinkedList = new LinkedList<>();
         Global.fishContainerLinkedList.clear();
         for (int i = 0; i < 25; i++) {
-Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
+            Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
         }
 
-        adapter = new FishAdapter(this,  Global.fishContainerLinkedList, defaultContainer);
+        adapter = new FishAdapter(this, Global.fishContainerLinkedList, defaultContainer);
         adapter.setGameScreen(this);
 
 
-
-
         grid.setAdapter(adapter);
-        reFiller = new reFiller();
-        reFiller.start();
-        bubblebar=new Bubblebar();
+        bubblebar = new Bubblebar();
         bubblebar.start();
 
     }
+
     //to be called isntead of notifydatasetchanged because this runs on the uithread no matter where you called it from
-    public void datasetchanged(){
+    public void datasetchanged() {
         GameScreen.this.runOnUiThread(() -> adapter.notifyDataSetChanged());
     }
 
     public void win() {
         GameStatistics.setHighscore(scorepoints);
-        Global.won=true;
+        Global.won = true;
         GameStatistics.gameWon();
-        Global.scorePoints=scorepoints;
+        Global.scorePoints = scorepoints;
         startActivity(
                 new Intent(this, WinScreen.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
+
     private void lose() {
         GameStatistics.setHighscore(scorepoints);
         GameStatistics.print();
-        Global.scorePoints=scorepoints;
-        Global.won=false;
+        Global.scorePoints = scorepoints;
+        Global.won = false;
         startActivity(
                 new Intent(this, WinScreen.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
@@ -126,7 +124,7 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     }
 
     public void setPoints(int points) {
-        if(points!=scorepoints){
+        if (points != scorepoints) {
             scorepoints = scorepoints + points;
         }
         GameStatistics.addPoints(points);
@@ -135,24 +133,24 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     }
 
     public void bubble(int size) {
-        binding.bubblebar.setProgress(binding.bubblebar.getProgress()+size*(difficulty/15));
+        binding.bubblebar.setProgress(binding.bubblebar.getProgress() + size * (difficulty / 15));
     }
 
-    public class Bubblebar extends Thread{
+    public class Bubblebar extends Thread {
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
             binding.bubblebar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.MULTIPLY);
             binding.bubblebar.setProgress(100);
-            while(Global.playing){
+            while (Global.playing) {
                 try {
                     Thread.sleep(difficulty);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                binding.bubblebar.setProgress(binding.bubblebar.getProgress()-1,true);
-                if(binding.bubblebar.getProgress()==0){
+                binding.bubblebar.setProgress(binding.bubblebar.getProgress() - 1, true);
+                if (binding.bubblebar.getProgress() == 0) {
                     lose();
 
                 }
@@ -162,24 +160,6 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
 
 
 
-    public class reFiller extends Thread {
-        @Override
-        public void run() {
-
-            while (Global.playing) {
-                try {
-                    Log.e("TAG", "run: refiller ");
-                    Thread.sleep(60000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Log.e("TAG", "refilling");
-
-                adapter.refill();
-                datasetchanged();
-            }
-        }
-    }
 
     public GameScreen getInstance() {
         return this;
@@ -190,23 +170,21 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     public void onSensorChanged(SensorEvent sensorEvent) {
         try {
             float lightValue = sensorEvent.values[0];
-            if (lightValue < 200){
+            if (lightValue < 200) {
                 //No need to redraw fish if sleepyTime was true all the time
-                if(Global.isSleepytime() != true) {
+                if (Global.isSleepytime() != true) {
                     Global.setSleepytime(true);
                     adapter.redrawAssets();
                     adapter.notifyDataSetChanged();
                 }
-            }
-            else{
-                if(Global.isSleepytime() != false) {
+            } else {
+                if (Global.isSleepytime() != false) {
                     Global.setSleepytime(false);
                     adapter.redrawAssets();
                     adapter.notifyDataSetChanged();
                 }
             }
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -217,13 +195,13 @@ Global.fishContainerLinkedList.add(new FishContainer(Global.getRandomFish()));
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        sensorManager.registerListener(this,lightSensor,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
     }

@@ -53,26 +53,26 @@ public class MainActivity extends AppCompatActivity {
                 enterName();
             }
         });
-       binding.tutorialButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               startTutorial();
-           }
-       });
-       binding.statistics.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               startActivity(new Intent(view.getContext(),StatisticScreen.class));
-           }
-       });
+        binding.tutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTutorial();
+            }
+        });
+        binding.statistics.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(view.getContext(), StatisticScreen.class));
+            }
+        });
 
     }
 
-    public void selectDifficulty(){
-        startActivity(new Intent(this,DifficultyActivity.class));
+    public void selectDifficulty() {
+        startActivity(new Intent(this, DifficultyActivity.class));
     }
 
-    public void enterName(){
+    public void enterName() {
         //TODO: Dialog für Namensauswahl
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Name auswählen: ");
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Global.userName = input.getText().toString();
                 saveGlobalProps(input.getText().toString());
-               // binding.displayUserName.setText(GlobalVariables.getUserName());
+                // binding.displayUserName.setText(GlobalVariables.getUserName());
                 initGlobalProps(); //Aktualisieren der entsprechenden Views
             }
         });
@@ -100,30 +100,34 @@ public class MainActivity extends AppCompatActivity {
         });
         builder.show();
     }
-    public void startTutorial(){
+
+    public void startTutorial() {
         startActivity(new Intent(this, TutorialActivity.class));
     }
 
     public void toLobby(View view) {
-        startActivity( new Intent(this,LobbyActivity.class));
+        startActivity(new Intent(this, LobbyActivity.class));
     }
+
     //Username und später eventuelle andere persistente Daten werden in einem kleinem File gespeichert
-    private void saveGlobalProps(String username){
+    private void saveGlobalProps(String username) {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(getApplicationContext().openFileOutput("data.json", Context.MODE_PRIVATE));
             JSONObject object = new JSONObject();
-            object.put("username" , username);
+            object.put("username", username);
             osw.write(object.toString());
             osw.close();
         } catch (Exception e) {
         }
     }
-    private void initGlobalProps(){
+
+    private void initGlobalProps() {
         File file = new File(getApplicationContext().getFilesDir(), "data.json");
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
+
             StringBuilder content = new StringBuilder();
-            while(br.ready()){
+            while (br.ready()) {
                 String line = br.readLine();
                 content.append(line);
             }
@@ -131,17 +135,17 @@ public class MainActivity extends AppCompatActivity {
             JSONObject json = new JSONObject(content.toString());
             Global.setUserName(json.getString("username"));
             binding.displayUserName.setText(Global.getUserName());
-        } catch (Exception e){
-            Log.i("FILE READ ERROR" , e.toString());
+        } catch (Exception e) {
+            Log.i("FILE READ ERROR", e.toString());
             Global.setUserName("NEW_USER");
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        Global.playing=false;
+        Global.playing = false;
     }
-
 
 
 }

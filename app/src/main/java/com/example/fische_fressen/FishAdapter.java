@@ -222,30 +222,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
     }
 
-    public void refill() {
-        for (int i = 0; i < 25; i++) {
-            if (getItem(i).fish.getSize() == -2) {
-                Fish fish = new Fish();
-                int rand = (int) (Math.random() * 10) % 3;
-                switch (rand) {
-                    case 0:
-                        fish.setImageID(R.drawable.bluefish);
-                        fish.setSize(1);
-                        break;
-                    case 1:
-                        fish.setImageID(R.drawable.yellowfish);
-                        fish.setSize(0);
-                        break;
-                    case 2:
-                        fish.setImageID(R.drawable.purplefish);
-                        fish.setSize(2);
-                        break;
-                }
-                getItem(i).fish = fish;
-            }
-        }
 
-    }
 
     public void sendfish(int newPosition) {
         GameStatistics.makeTurn();
@@ -298,8 +275,13 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
     private void explode(int newPosition) {
 
-
-            if(newPosition%5==0){
+        try {
+            Thread.sleep(50);
+            gameScreen.datasetchanged();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(newPosition%5==0){
                 if ( getItem(newPosition+1).explode()) {
                    explode(newPosition+1);
                 }
@@ -385,7 +367,8 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 fishContainer = dinner.container;
                 points *= dinner.points;
               gameScreen.datasetchanged();
-              if(fishContainer.fish.getSize()>0){
+              if(fishContainer.fish.getSize()>=0){
+                  //todo: add sound for eating
                   gameScreen.bubble(fishContainer.fish.getSize());
 
               }
