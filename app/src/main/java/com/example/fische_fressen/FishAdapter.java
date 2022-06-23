@@ -301,46 +301,43 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         @Override
         public void run() {
             try {
-                gameScreen.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(getItem(newPosition).fish.getSize()==3||getItem(newPosition).fish.getSize()==-2||getItem(newPosition).fish.getSize()==5){
-                            ImageView fishview=getItem(newPosition).getFishview();
-                            fishview.setImageResource(R.drawable.empty);
-                            // gameScreen.setImageRessource(fishview,R.drawable.empty);
-                            gameScreen.datasetchanged();
-                            fishview.setBackgroundResource(R.drawable.empty);
-                            // gameScreen.setBackgroundRessource(R.drawable.empty,fishview);
-                            if(getItem(newPosition).fish.getSize()==5){
-                                fishview.setBackgroundResource(R.drawable.mineexplostion);
-                                //gameScreen.setBackgroundRessource(R.drawable.mineexplostion,fishview);
-                            }else{
-                                fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
-                                //   gameScreen.setBackgroundRessource(R.drawable.redfischexpliosoin,fishview);
+                gameScreen.runOnUiThread(() -> {
+                    if(getItem(newPosition).fish.getSize()==3||getItem(newPosition).fish.getSize()==-2||getItem(newPosition).fish.getSize()==5){
+                        ImageView fishview=getItem(newPosition).getFishview();
+                        fishview.setImageResource(R.drawable.empty);
+                        // gameScreen.setImageRessource(fishview,R.drawable.empty);
+                        gameScreen.datasetchanged();
+                        fishview.setBackgroundResource(R.drawable.empty);
+                        // gameScreen.setBackgroundRessource(R.drawable.empty,fishview);
+                        if(getItem(newPosition).fish.getSize()==5){
+                            fishview.setBackgroundResource(R.drawable.mineexplostion);
+                            //gameScreen.setBackgroundRessource(R.drawable.mineexplostion,fishview);
+                        }else{
+                            fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
+                            //   gameScreen.setBackgroundRessource(R.drawable.redfischexpliosoin,fishview);
+                        }
+
+                        AnimationDrawable animation= null;
+                        boolean checker=false;
+                        while (true) {
+                            checker=true;
+                            try {
+                                animation = (AnimationDrawable)fishview.getBackground();
+                            } catch (Exception e) {
+                                checker=false;
                             }
-
-                            AnimationDrawable animation= null;
-                            boolean checker=false;
-                            while (true) {
-                                checker=true;
-                                try {
-                                    animation = (AnimationDrawable)fishview.getBackground();
-                                } catch (Exception e) {
-                                    checker=false;
-                                }
-                                if(checker){
-                                    break;
-                                }
-
+                            if(checker){
+                                break;
                             }
-
-                            animation.start();
-                            //  gameScreen.animate(animation);
-                            getItem(newPosition).fish=Global.defaultFish;
-                            // gameScreen.animate(animation);
-
 
                         }
+
+                        animation.start();
+                        //  gameScreen.animate(animation);
+                        getItem(newPosition).fish=Global.defaultFish;
+                        // gameScreen.animate(animation);
+
+
                     }
                 });
                } catch (IndexOutOfBoundsException e) {
