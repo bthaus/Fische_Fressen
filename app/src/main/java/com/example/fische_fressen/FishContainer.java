@@ -1,6 +1,7 @@
 package com.example.fische_fressen;
 
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
@@ -16,6 +17,15 @@ public class FishContainer {
     public int position;
     Fish fish;
 
+    public ImageView getFishview() {
+        return fishview;
+    }
+
+    public void setFishview(ImageView fishview) {
+        this.fishview = fishview;
+    }
+
+    ImageView fishview=null;
     public FishContainer(int imgid,int size) {
         fish=new Fish(Global.defaultFish);
         this.fish.setSize(size);

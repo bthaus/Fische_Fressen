@@ -71,8 +71,8 @@ public class Global {
 
     public static Fish getRandomFish(){
         int rand = (int) (Math.random() * 1000);
-        if(rand>950){
-            return new ExplosionFish();
+        if(rand>700){
+            return new Fish(R.drawable.redfish, 3);
         }
         rand=rand%3;
         switch (rand) {

@@ -6,6 +6,7 @@ import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -94,11 +95,17 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
         bubblebar = new Bubblebar();
         bubblebar.start();
 
+
     }
 
     //to be called isntead of notifydatasetchanged because this runs on the uithread no matter where you called it from
     public void datasetchanged() {
         GameScreen.this.runOnUiThread(() -> adapter.notifyDataSetChanged());
+
+    }
+    public void animate(AnimationDrawable animation){
+        GameScreen.this.runOnUiThread(animation::start);
+
     }
 
     public void win() {

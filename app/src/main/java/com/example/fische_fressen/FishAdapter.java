@@ -2,18 +2,25 @@ package com.example.fische_fressen;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
@@ -103,6 +110,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         gameScreen.datasetchanged();
 
     }
+
     @SuppressLint("ClickableViewAccessibility")
     @NonNull
     @Override
@@ -116,8 +124,9 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         fishContainer.position = position;
 
         ImageView fishview = listitemView.findViewById(R.id.idIVcourse);
-
+        fishview.animate();
         fishview.setImageResource(fishContainer.getImgid());
+        fishContainer.setFishview(fishview);
 //the reason the dateset wasnt updated during eating fish is: onclicklistener works on UIthread, hence it is only not blocked once the sendfish is done. because notifydatasetchanged only sets a flag to change but doesnt force it
         //it only gets done once the onclicklisteneer is finished
         listitemView.setOnClickListener(view -> {
@@ -273,17 +282,38 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
     }
 
-    private void explode(int newPosition) {
-
-        try {
-            Thread.sleep(50);
-            gameScreen.datasetchanged();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public class Exploder extends Thread{
+        int newPosition;
+        public Exploder(int position) {
+            this.newPosition=position;
         }
-        if(newPosition%5==0){
+
+        @Override
+        public void run() {
+            if(getItem(newPosition).fish.getSize()==3){
+                Log.e("TAG", "explode: " );
+                ImageView fishview=getItem(newPosition).getFishview();
+                fishview.setImageResource(R.drawable.empty);
+                gameScreen.datasetchanged();
+                fishview.setBackgroundResource(R.drawable.empty);
+                fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
+                AnimationDrawable animation=(AnimationDrawable)fishview.getBackground();
+                Log.e("TAG", "explode: " );
+                Log.e("TAG", "explode: " );
+                animation.start();
+                // gameScreen.animate(animation);
+                Log.e("TAG", "explode: " );
+
+            }
+            try {
+                Thread.sleep(80);
+                gameScreen.datasetchanged();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(newPosition%5==0){
                 if ( getItem(newPosition+1).explode()) {
-                   explode(newPosition+1);
+                    explode(newPosition+1);
                 }
                 try {
                     if ( getItem(newPosition-5).explode()) {
@@ -326,29 +356,34 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
                 return;
             }
-        if ( getItem(newPosition+1).explode()) {
-            explode(newPosition+1);
-        }
-        if ( getItem(newPosition-1).explode()) {
-            explode(newPosition-1);
-        }
-        try {
-            if ( getItem(newPosition-5).explode()) {
-                explode(newPosition-5);
+            if ( getItem(newPosition+1).explode()) {
+                explode(newPosition+1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } try {
-
-            if ( getItem(newPosition+5).explode()) {
-                explode(newPosition+5);
+            if ( getItem(newPosition-1).explode()) {
+                explode(newPosition-1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        getItem(newPosition).explode();
-        Log.e("TAG", "explode: ");
+            try {
+                if ( getItem(newPosition-5).explode()) {
+                    explode(newPosition-5);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } try {
 
+                if ( getItem(newPosition+5).explode()) {
+                    explode(newPosition+5);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            getItem(newPosition).explode();
+            Log.e("TAG", "explode: ");
+
+        }
+    }
+
+    private void explode(int newPosition) {
+       new Exploder(newPosition).start();
     }
 
     public int eat(int position, int offset, FishContainer fishContainer) {
