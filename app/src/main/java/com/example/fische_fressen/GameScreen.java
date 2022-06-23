@@ -148,6 +148,10 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
         binding.bubblebar.setProgress(binding.bubblebar.getProgress() + size * (difficulty / 15));
     }
 
+    public void setImageRessource(ImageView fishview, int empty) {
+        GameScreen.this.runOnUiThread(() -> fishview.setImageResource(empty));
+    }
+
     public class Bubblebar extends Thread {
 
         @RequiresApi(api = Build.VERSION_CODES.N)
