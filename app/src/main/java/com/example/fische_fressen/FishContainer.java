@@ -1,6 +1,7 @@
 package com.example.fische_fressen;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.fische_fressen.Exceptions.BottomReachedException;
@@ -100,8 +101,7 @@ if(this.position%5==0||(this.position+1)%5==0){
 
         }
         if(fish.getSize()==5||fish.getSize()==3){
-            Log.e("TAG", "---------------------------------------explode: " );
-            this.fish=Global.defaultFish;
+
             return true;
         }
         this.fish=Global.defaultFish;

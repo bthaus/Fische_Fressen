@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.view.MotionEventCompat;
@@ -105,6 +106,10 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     }
     public void animate(AnimationDrawable animation){
         GameScreen.this.runOnUiThread(animation::start);
+
+    }
+    public void setBackgroundRessource(int ressource, ImageView imageView){
+        GameScreen.this.runOnUiThread(() -> imageView.setBackgroundResource(ressource));
 
     }
 
