@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
 import com.example.fische_fressen.Exceptions.WallReachedException;
+import com.example.fische_fressen.GameModels.Fish;
 import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.utils.Dinner;
@@ -232,14 +233,15 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         Movement.Direction direction=getDirection(position,newPosition); //get the firection
         if (position == newPosition && fish.fish.getSize() == 3) {
             int temp=gameScreen.scorepoints;
-            Exploder exploder=new Exploder(newPosition);
+            explode(newPosition);
+           /* Exploder exploder=new Exploder(newPosition);
             exploder.start();
             try {
                 exploder.join();
                 gameScreen.datasetchanged();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
           int temp2=gameScreen.scorepoints;
           temp=temp2-temp;
             Log.e("TAG", "explodepoints: "+temp );
@@ -248,7 +250,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
 
             try {
-                Thread.sleep(300);
+                Thread.sleep(Global.eatDelay);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -260,14 +262,15 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         }
         if(position==newPosition && fish.fish.getSize()==5){
             int temp=gameScreen.scorepoints;
-            Exploder exploder=new Exploder(newPosition);
+            explode(newPosition);
+           /* Exploder exploder=new Exploder(newPosition);
             exploder.start();
             try {
                 exploder.join();
                 gameScreen.datasetchanged();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
             int temp2=gameScreen.scorepoints;
             temp=temp2-temp;
             Log.e("TAG", "explodepoints: "+temp );
@@ -281,6 +284,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             gameScreen.datasetchanged();
             return;
         }
+
         Log.e("TAG", "offset " + direction);
         int offset = 0;
 
@@ -290,8 +294,8 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
 
     }
-
-    public class Exploder extends Thread{
+//used an exploder thread during development, but is not neccessary anymore
+   /* public class Exploder extends Thread{
         int newPosition;
         public Exploder(int position) {
             this.newPosition=position;
@@ -305,33 +309,17 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                     if(getItem(newPosition).fish.getSize()==3||getItem(newPosition).fish.getSize()==-2||getItem(newPosition).fish.getSize()==5){
                         ImageView fishview=getItem(newPosition).getFishview();
                         fishview.setImageResource(R.drawable.empty);
-                        // gameScreen.setImageRessource(fishview,R.drawable.empty);
                         gameScreen.datasetchanged();
+                        Fish fish=getItem(newPosition).fish;
                         fishview.setBackgroundResource(R.drawable.empty);
-                        // gameScreen.setBackgroundRessource(R.drawable.empty,fishview);
-                        if(getItem(newPosition).fish.getSize()==5){
+                         if(fish.getSize()==5){
                             fishview.setBackgroundResource(R.drawable.mineexplostion);
-                            //gameScreen.setBackgroundRessource(R.drawable.mineexplostion,fishview);
-                        }else{
+                        }if(fish.getSize()==3){
                             fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
-                            //   gameScreen.setBackgroundRessource(R.drawable.redfischexpliosoin,fishview);
                         }
 
-                        AnimationDrawable animation= null;
-                        boolean checker=false;
-                        while (true) {
-                            checker=true;
-                            try {
-                                animation = (AnimationDrawable)fishview.getBackground();
-                            } catch (Exception e) {
-                                checker=false;
-                            }
-                            if(checker){
-                                break;
-                            }
 
-                        }
-
+                        AnimationDrawable animation = (AnimationDrawable)fishview.getBackground();
                         animation.start();
                         //  gameScreen.animate(animation);
                         getItem(newPosition).fish=Global.defaultFish;
@@ -344,7 +332,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
             }
             try {
-                Thread.sleep(80);
+                Thread.sleep(Global.explosionDelay);
                 gameScreen.datasetchanged();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -424,24 +412,133 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
         }
     }
-
+*/
     private void explode(int newPosition) {
+        try {
+            gameScreen.runOnUiThread(() -> {
+                if(getItem(newPosition).fish.getSize()==3||getItem(newPosition).fish.getSize()==-2||getItem(newPosition).fish.getSize()==5){
+                    ImageView fishview=getItem(newPosition).getFishview();
+                    fishview.setImageResource(R.drawable.empty);
+                    gameScreen.datasetchanged();
+                    Fish fish=getItem(newPosition).fish;
+                    fishview.setBackgroundResource(R.drawable.empty);
+                    if(fish.getSize()==5){
+                        fishview.setBackgroundResource(R.drawable.mineexplostion);
+                    }if(fish.getSize()==3){
+                        fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
+                    }
 
-       Exploder exploder=new Exploder(newPosition);
+
+                    AnimationDrawable animation = (AnimationDrawable)fishview.getBackground();
+                    animation.start();
+
+
+                    //  gameScreen.animate(animation);
+                    getItem(newPosition).fish=Global.defaultFish;
+                    // gameScreen.animate(animation);
+
+
+                }
+            });
+        } catch (IndexOutOfBoundsException e) {
+
+        }
+        try {
+            Thread.sleep(Global.explosionDelay);
+            gameScreen.datasetchanged();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (newPosition<25&&newPosition>0) {
+            if(newPosition<25&&newPosition>0&&newPosition%5==0){
+                if ( getItem(newPosition+1).explode()) {
+                    explode(newPosition+1);
+                    getItem(newPosition+1).fish=Global.defaultFish;
+                }
+                try {
+                    if ( getItem(newPosition-5).explode()) {
+                        explode(newPosition-5);
+                    }
+
+                }catch (IndexOutOfBoundsException e) {
+
+                } try {
+
+                    if ( getItem(newPosition+5).explode()) {
+                        explode(newPosition+5);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+
+                }
+                getItem(newPosition).explode();
+
+                return;
+            }
+            if(newPosition<25&&newPosition>0&(newPosition+1)%5==0){
+                if ( getItem(newPosition-1).explode()) {
+                    explode(newPosition-1);
+                }
+                try {
+                    if ( getItem(newPosition-5).explode()) {
+                        explode(newPosition-5);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+
+                } try {
+
+                    if ( getItem(newPosition+5).explode()) {
+                        explode(newPosition+5);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+
+                }
+                getItem(newPosition).explode();
+
+                return;
+            }
+            if ( newPosition<25&&newPosition>0&getItem(newPosition+1).explode()) {
+                explode(newPosition+1);
+            }
+            if ( newPosition<25&&newPosition>0&getItem(newPosition-1).explode()) {
+                explode(newPosition-1);
+            }
+            try {
+                if (newPosition<25&&newPosition>0& getItem(newPosition-5).explode()) {
+                    explode(newPosition-5);
+                }
+            } catch (IndexOutOfBoundsException e) {
+
+            }
+            try {
+
+                if ( newPosition<25&&newPosition>0&getItem(newPosition+5).explode()) {
+                    explode(newPosition+5);
+                }
+            } catch (IndexOutOfBoundsException e) {
+
+            }
+            getItem(newPosition).explode();
+        }
+        // Log.e("TAG", "explode: ");
+
+    }
+    //remains of exploder
+       /*Exploder exploder=new Exploder(newPosition);
        exploder.start();
         try {
             exploder.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public int eat(int position, int offset, FishContainer fishContainer) {
 
         Log.e("TAG", "offset " + offset);
         Looper.prepare();
         int points = 2;
-        int timeout=300;
+        int timeout=Global.eatDelay;
         try {
             while (true) {
 

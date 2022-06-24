@@ -1,5 +1,6 @@
 package com.example.fische_fressen;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;

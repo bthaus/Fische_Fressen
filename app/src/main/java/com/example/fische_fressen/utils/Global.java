@@ -25,6 +25,8 @@ public class Global {
     public static Difficulty difficulty=Difficulty.HARD;
     public static boolean won=false;
     public static boolean playing=false;
+    public static long explosionDelay=80;
+    public static int eatDelay=250;
 
 
     public static boolean isSleepytime() {
@@ -71,13 +73,13 @@ public class Global {
 
     public static Fish getRandomFish(){
         int rand = (int) (Math.random() * 1000);
-        if(rand>600){
+        if(rand>950){
             return new ExplosionFish();
         }
         rand=rand%3;
         switch (rand) {
 
-            case 0: return new Fish(R.drawable.redfish, 3);
+            case 0: return new Fish(R.drawable.yellowfish, 0);
             case 1: return new Fish(R.drawable.bluefish, 1);
             case 2:return new Fish(R.drawable.purplefish, 2);
             default: Global.fishContainerLinkedList.add(new FishContainer(R.drawable.icon, 5));
