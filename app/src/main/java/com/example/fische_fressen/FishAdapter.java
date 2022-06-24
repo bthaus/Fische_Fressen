@@ -3,6 +3,9 @@ package com.example.fische_fressen;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.ToneGenerator;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -379,6 +382,8 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     }
 */
     private void explode(int newPosition) {
+
+
         Global.explosionNumber++;
         try {
             gameScreen.runOnUiThread(() -> {
@@ -390,7 +395,16 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                     fishview.setBackgroundResource(R.drawable.empty);
                     if(fish.getSize()==5){
                         fishview.setBackgroundResource(R.drawable.mineexplostion);
+                        MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.mineexplosionsound);
+                        mPlayer.start();
+                        mPlayer.setOnCompletionListener(MediaPlayer::release);
                     }if(fish.getSize()==3){
+                        MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.explosiondelayedfaded);
+                        mPlayer.start();
+                        //if reset doesnt give you what you need use mp.release() instead
+                        //but dont forget to call MediaPlayer.create
+                        //before next mediaPlayer.start() method
+                        mPlayer.setOnCompletionListener(MediaPlayer::release);
                         fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
                     }
 
@@ -406,7 +420,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
                 }
             });
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException ignored) {
 
         }
         try {
@@ -417,7 +431,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         }
 
         if (newPosition<25&&newPosition>0) {
-            if(newPosition<25&&newPosition>0&&newPosition%5==0){
+            if(newPosition % 5 == 0){
                 if ( getItem(newPosition+1).explode()) {
                     explode(newPosition+1);
                     getItem(newPosition+1).fish=Global.defaultFish;
@@ -427,21 +441,21 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                         explode(newPosition-5);
                     }
 
-                }catch (IndexOutOfBoundsException e) {
+                }catch (IndexOutOfBoundsException ignored) {
 
                 } try {
 
                     if ( getItem(newPosition+5).explode()) {
                         explode(newPosition+5);
                     }
-                } catch (IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException ignored) {
 
                 }
                 getItem(newPosition).explode();
 
                 return;
             }
-            if(newPosition<25&&newPosition>0&(newPosition+1)%5==0){
+            if((newPosition + 1) % 5 == 0){
                 if ( getItem(newPosition-1).explode()) {
                     explode(newPosition-1);
                 }
@@ -449,39 +463,39 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                     if ( getItem(newPosition-5).explode()) {
                         explode(newPosition-5);
                     }
-                } catch (IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException ignored) {
 
                 } try {
 
                     if ( getItem(newPosition+5).explode()) {
                         explode(newPosition+5);
                     }
-                } catch (IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException ignored) {
 
                 }
                 getItem(newPosition).explode();
 
                 return;
             }
-            if ( newPosition<25&&newPosition>0&getItem(newPosition+1).explode()) {
+            if (getItem(newPosition + 1).explode()) {
                 explode(newPosition+1);
             }
-            if ( newPosition<25&&newPosition>0&getItem(newPosition-1).explode()) {
+            if (getItem(newPosition - 1).explode()) {
                 explode(newPosition-1);
             }
             try {
-                if (newPosition<25&&newPosition>0& getItem(newPosition-5).explode()) {
+                if (getItem(newPosition - 5).explode()) {
                     explode(newPosition-5);
                 }
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException ignored) {
 
             }
             try {
 
-                if ( newPosition<25&&newPosition>0&getItem(newPosition+5).explode()) {
+                if (getItem(newPosition + 5).explode()) {
                     explode(newPosition+5);
                 }
-            } catch (IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException ignored) {
 
             }
             getItem(newPosition).explode();
@@ -489,15 +503,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         // Log.e("TAG", "explode: ");
 
     }
-    //remains of exploder
-       /*Exploder exploder=new Exploder(newPosition);
-       exploder.start();
-        try {
-            exploder.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
+
 
     public int eat(int position, int offset, FishContainer fishContainer) {
 
@@ -511,12 +517,19 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                 //calculate offset
                 position += offset;
                 //get item of newly calculated position and execute eat
+
                 Dinner dinner = getItem(position).eat(fishContainer);
                 fishContainer = dinner.container;
                 points *= dinner.points;
               gameScreen.datasetchanged();
               if(fishContainer.fish.getSize()>=0){
                   //todo: add sound for eating
+                  MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.nomsoundkurz);
+                  mPlayer.start();
+                  //if reset doesnt give you what you need use mp.release() instead
+                  //but dont forget to call MediaPlayer.create
+                  //before next mediaPlayer.start() method
+                  mPlayer.setOnCompletionListener(MediaPlayer::release);
                   gameScreen.bubble(fishContainer.fish.getSize());
 
               }
