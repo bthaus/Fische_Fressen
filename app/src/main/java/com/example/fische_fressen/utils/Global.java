@@ -27,6 +27,7 @@ public class Global {
     public static boolean playing=false;
     public static long explosionDelay=80;
     public static int eatDelay=250;
+    public static int explosionNumber;
 
 
     public static boolean isSleepytime() {

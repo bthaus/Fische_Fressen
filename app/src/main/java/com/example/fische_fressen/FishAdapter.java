@@ -231,50 +231,15 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         int position=Global.lastClickedPosition;
         FishContainer fish=getItem(position); //the fishcontainer you clicked
         Movement.Direction direction=getDirection(position,newPosition); //get the firection
-        if (position == newPosition && fish.fish.getSize() == 3) {
-            int temp=gameScreen.scorepoints;
-            explode(newPosition);
-           /* Exploder exploder=new Exploder(newPosition);
-            exploder.start();
-            try {
-                exploder.join();
-                gameScreen.datasetchanged();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-          int temp2=gameScreen.scorepoints;
-          temp=temp2-temp;
-            Log.e("TAG", "explodepoints: "+temp );
-          gameScreen.setPoints(-temp);
-          gameScreen.setPoints(temp);
 
-
-            try {
-                Thread.sleep(Global.eatDelay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            for (int i = 0; i < 25; i++) {
-                gameScreen.setBackgroundRessource(R.drawable.empty, getItem(i).fishview);
-            }
-            gameScreen.datasetchanged();
-            return;
-        }
-        if(position==newPosition && fish.fish.getSize()==5){
+        if(position==newPosition && (fish.fish.getSize()==5||fish.fish.getSize()==3)){
             int temp=gameScreen.scorepoints;
+            Global.explosionNumber=0;
             explode(newPosition);
-           /* Exploder exploder=new Exploder(newPosition);
-            exploder.start();
-            try {
-                exploder.join();
-                gameScreen.datasetchanged();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
             int temp2=gameScreen.scorepoints;
             temp=temp2-temp;
-            Log.e("TAG", "explodepoints: "+temp );
             gameScreen.setPoints(-temp);
+            temp*=Global.explosionNumber;
             gameScreen.setPoints(temp);
             try {
                 Thread.sleep(150);
@@ -414,6 +379,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     }
 */
     private void explode(int newPosition) {
+        Global.explosionNumber++;
         try {
             gameScreen.runOnUiThread(() -> {
                 if(getItem(newPosition).fish.getSize()==3||getItem(newPosition).fish.getSize()==-2||getItem(newPosition).fish.getSize()==5){

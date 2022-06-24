@@ -136,8 +136,14 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     }
 
     public void setPoints(int points) {
+        int factor=1;
+        switch (Global.difficulty){
+            case HARD:factor=3;break;
+            case EASY:factor=1;break;
+            case MEDIUM: factor=2;break;
+        }
         if (points != scorepoints) {
-            scorepoints = scorepoints + points;
+            scorepoints = scorepoints + points*factor;
         }
         GameStatistics.addPoints(points);
 
