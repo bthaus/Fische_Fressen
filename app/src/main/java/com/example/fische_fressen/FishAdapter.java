@@ -26,6 +26,7 @@ import com.example.fische_fressen.GameModels.Movement;
 import com.example.fische_fressen.utils.Dinner;
 import com.example.fische_fressen.utils.Global;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class FishAdapter extends ArrayAdapter<FishContainer> {
@@ -395,16 +396,9 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                     fishview.setBackgroundResource(R.drawable.empty);
                     if(fish.getSize()==5){
                         fishview.setBackgroundResource(R.drawable.mineexplostion);
-                        MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.mineexplosionsound);
-                        mPlayer.start();
-                        mPlayer.setOnCompletionListener(MediaPlayer::release);
+                        playSound(R.raw.mineexplosionsound);
                     }if(fish.getSize()==3){
-                        MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.explosiondelayedfaded);
-                        mPlayer.start();
-                        //if reset doesnt give you what you need use mp.release() instead
-                        //but dont forget to call MediaPlayer.create
-                        //before next mediaPlayer.start() method
-                        mPlayer.setOnCompletionListener(MediaPlayer::release);
+                        playSound(R.raw.explosiondelayedfaded);
                         fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
                     }
 
@@ -505,6 +499,35 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
     }
 
 
+    public class soundPlayer extends Thread{
+        public soundPlayer(int nomsoundkurz) {
+            this.nomsoundkurz = nomsoundkurz;
+        }
+
+        int nomsoundkurz;
+        @Override
+        public void run() {
+
+            MediaPlayer mPlayer = MediaPlayer.create(context, nomsoundkurz);
+
+            mPlayer.start();
+            mPlayer.setOnCompletionListener(mediaPlayer -> {
+                Log.e("TAG", "released: ");
+                mPlayer.reset();
+                mPlayer.release();
+                this.interrupt();
+            });
+        }
+    }
+    public void playSound(int nomsoundkurz){
+
+        soundPlayer player=new soundPlayer(nomsoundkurz);
+        player.start();
+
+
+
+    }
+
     public int eat(int position, int offset, FishContainer fishContainer) {
 
         Log.e("TAG", "offset " + offset);
@@ -524,12 +547,9 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
               gameScreen.datasetchanged();
               if(fishContainer.fish.getSize()>=0){
                   //todo: add sound for eating
-                  MediaPlayer mPlayer = MediaPlayer.create(context, R.raw.nomsoundkurz);
-                  mPlayer.start();
-                  //if reset doesnt give you what you need use mp.release() instead
-                  //but dont forget to call MediaPlayer.create
-                  //before next mediaPlayer.start() method
-                  mPlayer.setOnCompletionListener(MediaPlayer::release);
+                  playSound(R.raw.nomsoundkurz);
+
+
                   gameScreen.bubble(fishContainer.fish.getSize());
 
               }
