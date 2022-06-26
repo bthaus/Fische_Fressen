@@ -547,7 +547,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
               gameScreen.datasetchanged();
               if(fishContainer.fish.getSize()>=0){
                   //todo: add sound for eating
-                  playSound(R.raw.nomsoundkurz);
+                  playSound(R.raw.hamsoundlong);
 
 
                   gameScreen.bubble(fishContainer.fish.getSize());
