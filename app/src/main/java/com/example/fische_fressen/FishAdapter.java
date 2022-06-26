@@ -397,19 +397,23 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
                     if(fish.getSize()==5){
                         fishview.setBackgroundResource(R.drawable.mineexplostion);
                         playSound(R.raw.mineexplosionsound);
+
                     }if(fish.getSize()==3){
                         playSound(R.raw.explosiondelayedfaded);
                         fishview.setBackgroundResource(R.drawable.redfischexpliosoin);
                     }
 
+                    if(Global.explosionNumber>5){
+                        playSound(R.raw.explosion);
+                    }
 
                     AnimationDrawable animation = (AnimationDrawable)fishview.getBackground();
                     animation.start();
 
 
-                    //  gameScreen.animate(animation);
+
                     getItem(newPosition).fish=Global.defaultFish;
-                    // gameScreen.animate(animation);
+
 
 
                 }
@@ -534,6 +538,10 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
         Looper.prepare();
         int points = 2;
         int timeout=Global.eatDelay;
+        int sound=R.raw.hamsoundlong;
+        if(fishContainer.fish.getSize()==3){
+            sound=R.raw.nomsoundkurz;
+        }
         try {
             while (true) {
 
@@ -547,7 +555,8 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
               gameScreen.datasetchanged();
               if(fishContainer.fish.getSize()>=0){
                   //todo: add sound for eating
-                  playSound(R.raw.hamsoundlong);
+                  playSound(sound
+                  );
 
 
                   gameScreen.bubble(fishContainer.fish.getSize());
