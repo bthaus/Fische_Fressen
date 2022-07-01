@@ -47,11 +47,7 @@ public class StatisticHelper extends SQLiteOpenHelper {
         values.put("numberOfMinesExploded", numberOfMinesExploded);
 
         long result = db.insert("Statistics", null, values);
-        if (result == -1) {
-          //  Toast.makeText(context, "Adding entry to Database failed", Toast.LENGTH_LONG);
-        } else {
-          //  Toast.makeText(context, "Entry added to Database", Toast.LENGTH_LONG);
-        }
+
     }
 
     public Cursor readScores() {

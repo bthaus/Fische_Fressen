@@ -2,16 +2,13 @@ package com.example.fische_fressen;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -19,24 +16,16 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.core.view.MotionEventCompat;
 import androidx.navigation.ui.AppBarConfiguration;
 
-import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
-import com.example.fische_fressen.GameModels.Fish;
-import com.example.fische_fressen.GameModels.GameStatistics;
-import com.example.fische_fressen.GameModels.Movement;
-import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
-import com.example.fische_fressen.utils.Dinner;
-import com.example.fische_fressen.utils.Global;
 
-import java.util.LinkedList;
+import com.example.fische_fressen.GameModels.GameStatistics;
+import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
+import com.example.fische_fressen.utils.Global;
 
 public class GameScreen extends AppCompatActivity implements SensorEventListener {
 
@@ -173,8 +162,8 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
                 }
                 binding.bubblebar.setProgress(binding.bubblebar.getProgress() - 1, true);
                 if (binding.bubblebar.getProgress() == 0) {
+                    Global.playing = false;
                     lose();
-
                 }
             }
         }
