@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.fische_fressen.GameModels.GameStatistics;
+import com.example.fische_fressen.persistency.StatisticHelper;
 import com.example.fische_fressen.utils.Global;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,12 +23,14 @@ public class WinScreen extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityWinScreenBinding binding;
+    private StatisticHelper sh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         GameStatistics.makePermanent();
         Global.playing=false;
         super.onCreate(savedInstanceState);
+        sh = new StatisticHelper(this);
 
         binding = ActivityWinScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -36,6 +39,7 @@ public class WinScreen extends AppCompatActivity {
         }else{
             binding.winorlose.setText(R.string.game_lost);
         }
+        sh.addStatistic(GameStatistics.TotalStatistics.getHighscore(), GameStatistics.TotalStatistics.getMovesMade(),GameStatistics.TotalStatistics.getHighestPointsInOneTurn(), GameStatistics.TotalStatistics.getTotalpoints(),GameStatistics.TotalStatistics.getNumberOfYellowFishEaten(),  GameStatistics.TotalStatistics.getNumberOfBlueFishEaten(),GameStatistics.TotalStatistics.getNumberOfPurpleFishEaten(),GameStatistics.TotalStatistics.getNumberOfYellowFishExploded(),GameStatistics.TotalStatistics.getNumberOfBlueFishExploded(), GameStatistics.TotalStatistics.getNumberOfRedFishExploded(),GameStatistics.TotalStatistics.getNumberOfPurpleFishExploded(),GameStatistics.TotalStatistics.getNumberOfMinesExploded());
         binding.totalpoints.setText(String.valueOf(Global.scorePoints));
         binding.backtomainmenue.setOnClickListener(view -> startActivity(new Intent(view.getContext(), MainActivity.class)));
 

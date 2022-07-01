@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         binding.statistics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(view.getContext(), StatisticScreen.class));
+               // startActivity(new Intent(view.getContext(), StatisticScreen.class));
+                startActivity(new Intent(view.getContext(), StatisticOverviewActivity.class));
             }
         });
 

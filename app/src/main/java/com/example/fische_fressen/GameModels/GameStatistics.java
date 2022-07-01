@@ -2,6 +2,7 @@ package com.example.fische_fressen.GameModels;
 
 import android.util.Log;
 
+import com.example.fische_fressen.persistency.StatisticHelper;
 import com.example.fische_fressen.utils.Difficulty;
 import com.example.fische_fressen.utils.Global;
 import com.example.fische_fressen.utils.StatisticBundle;
@@ -9,6 +10,7 @@ import com.example.fische_fressen.utils.StatisticBundle;
 import java.util.LinkedList;
 
 public class GameStatistics {
+
     public static class EasyStatistics{
         public static int getNumberOfYellowFishEaten() {
             return numberOfYellowFishEaten;
