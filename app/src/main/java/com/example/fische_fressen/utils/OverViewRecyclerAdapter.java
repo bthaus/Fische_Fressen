@@ -35,8 +35,8 @@ public class OverViewRecyclerAdapter extends RecyclerView.Adapter<OverViewRecycl
     @Override
     public void onBindViewHolder(OverViewRecyclerAdapter.ViewHolder holder, int position) {
         ShortStatistic score = mData.get(position);
-        holder.myTextView.setText(score.getScore()+"");
-        holder.amount.setText("Game #"+score.getId());
+        holder.myTextView.setText("Game #"+score.getId());
+        holder.amount.setText("Score: "+score.getScore());
     }
 
     // total number of rows
