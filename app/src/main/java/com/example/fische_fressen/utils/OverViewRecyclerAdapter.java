@@ -19,16 +19,17 @@ public class OverViewRecyclerAdapter extends RecyclerView.Adapter<OverViewRecycl
     private OverViewRecyclerAdapter.ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public OverViewRecyclerAdapter(Context context, List<ShortStatistic> data) {
+    public OverViewRecyclerAdapter(Context context, List<ShortStatistic> data, OverViewRecyclerAdapter.ItemClickListener clickListener) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
+        this.mClickListener = clickListener;
     }
 
     // inflates the row layout from xml when needed
     @Override
     public OverViewRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.recyclerview_row, parent, false);
-        return new OverViewRecyclerAdapter.ViewHolder(view);
+        return new OverViewRecyclerAdapter.ViewHolder(view, this.mClickListener);
     }
 
     // binds the data to the TextView in each row
@@ -50,15 +51,19 @@ public class OverViewRecyclerAdapter extends RecyclerView.Adapter<OverViewRecycl
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
         TextView amount;
-        ViewHolder(View itemView) {
+        ItemClickListener clickListener;
+        ViewHolder(View itemView, ItemClickListener clickListener) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.tvAnimalName);
             amount = itemView.findViewById(R.id.amount);
+            itemView.setOnClickListener(this);
+            this.clickListener = clickListener;
+
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            clickListener.onItemClick(getAdapterPosition());
         }
     }
 
@@ -74,6 +79,6 @@ public class OverViewRecyclerAdapter extends RecyclerView.Adapter<OverViewRecycl
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(int position);
     }
 }

@@ -63,14 +63,16 @@ public class StatisticOverviewActivity extends AppCompatActivity implements Over
 
         RecyclerView rv = binding.recyclerview;
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new OverViewRecyclerAdapter(this,values);
+        adapter = new OverViewRecyclerAdapter(this,values, this);
         adapter.setClickListener(this);
         binding.recyclerview.setAdapter(adapter);
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-        startActivity(new Intent(this,StatisticScreen.class));
+    public void onItemClick(int position) {
+        Intent intent = new Intent(this, StatisticScreen.class);
+        intent.putExtra("id",adapter.getItem(position).getId());
+        startActivity(intent);
     }
 
     @Override

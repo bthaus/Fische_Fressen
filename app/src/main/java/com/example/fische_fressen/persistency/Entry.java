@@ -18,7 +18,8 @@ public class Entry implements BaseColumns {
     private String COLUMN_NAME_movesMade ="movesMade";
 
     public String SQL_CREATE_TABLE =
-           "CREATE TABLE "+ TABLE_NAME+" ("+ BaseColumns._ID +" INTEGER PRIMARY KEY, "+
+           "CREATE TABLE "+ TABLE_NAME+" ("+
+                   BaseColumns._ID +" INTEGER PRIMARY KEY, "+
            COLUMN_NAME_Highscore+ " INTEGER, "+
            COLUMN_NAME_movesMade+" INTEGER, "+
            COLUMN_NAME_highestPointsInOneTurn+" INTEGER, "+
