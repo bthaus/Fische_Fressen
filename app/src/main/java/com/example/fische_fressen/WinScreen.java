@@ -41,6 +41,7 @@ public class WinScreen extends AppCompatActivity {
         }
         sh.addStatistic(GameStatistics.TotalStatistics.getHighscore(), GameStatistics.TotalStatistics.getMovesMade(),GameStatistics.TotalStatistics.getHighestPointsInOneTurn(), GameStatistics.TotalStatistics.getTotalpoints(),GameStatistics.TotalStatistics.getNumberOfYellowFishEaten(),  GameStatistics.TotalStatistics.getNumberOfBlueFishEaten(),GameStatistics.TotalStatistics.getNumberOfPurpleFishEaten(),GameStatistics.TotalStatistics.getNumberOfYellowFishExploded(),GameStatistics.TotalStatistics.getNumberOfBlueFishExploded(), GameStatistics.TotalStatistics.getNumberOfRedFishExploded(),GameStatistics.TotalStatistics.getNumberOfPurpleFishExploded(),GameStatistics.TotalStatistics.getNumberOfMinesExploded());
         binding.totalpoints.setText(String.valueOf(Global.scorePoints));
+        GameStatistics.reset();
         binding.backtomainmenue.setOnClickListener(view -> startActivity(new Intent(view.getContext(), MainActivity.class)));
 
     }

@@ -565,6 +565,20 @@ public class GameStatistics {
         }
         TotalStatistics.gamesWon++;
     }
+    public static void reset(){
+        TotalStatistics.Highscore = 0;
+        TotalStatistics.movesMade=0;
+        TotalStatistics.highestPointsInOneTurn=0;
+        TotalStatistics.totalpoints =0;
+        TotalStatistics.numberOfYellowFishEaten = 0;
+        TotalStatistics.numberOfBlueFishEaten = 0;
+        TotalStatistics.numberOfPurpleFishEaten = 0;
+        TotalStatistics.numberOfYellowFishExploded= 0;
+        TotalStatistics.numberOfBlueFishExploded = 0;
+        TotalStatistics.numberOfPurpleFishExploded = 0;
+        TotalStatistics.numberOfRedFishExploded = 0;
+        TotalStatistics.numberOfMinesExploded = 0;
+    }
 
 
     public static LinkedList<StatisticBundle> getBundles(){
