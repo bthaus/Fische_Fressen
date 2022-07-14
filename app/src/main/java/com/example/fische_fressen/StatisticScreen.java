@@ -54,6 +54,7 @@ public class StatisticScreen extends AppCompatActivity  {
             c.moveToNext();
             bundles = new LinkedList<>();
             bundles.add(new StatisticBundle("Statistic", "#"+Integer.toString(c.getInt(0))));
+            bundles.add(new StatisticBundle("Player",c.getString(13)));
             bundles.add(new StatisticBundle("",""));
             bundles.add(new StatisticBundle("Highscore:  ", Integer.toString(c.getInt(1))));
             bundles.add(new StatisticBundle("Moves made:  ", Integer.toString(c.getInt(2))));

@@ -36,7 +36,7 @@ public class OverViewRecyclerAdapter extends RecyclerView.Adapter<OverViewRecycl
     @Override
     public void onBindViewHolder(OverViewRecyclerAdapter.ViewHolder holder, int position) {
         ShortStatistic score = mData.get(position);
-        holder.myTextView.setText("Game #"+score.getId());
+        holder.myTextView.setText("Game #"+score.getId()+" - "+score.getPlayerName());
         holder.amount.setText("Score: "+score.getScore());
     }
 

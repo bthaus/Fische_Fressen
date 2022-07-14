@@ -29,7 +29,7 @@ public class StatisticHelper extends SQLiteOpenHelper {
     public void addStatistic(int highscore, int movesMade, int highestPointsInOneTurn,
                              int totalPoints, int numberOfYellowFishEaten, int numberOfBlueFishEaten,
                              int numberOfPurpleFishEaten, int numberOfYellowFishExploded, int numberOfBlueFishExploded,
-                             int numberOfRedFishExploded, int numberOfPurpleFishExploded, int numberOfMinesExploded) {
+                             int numberOfRedFishExploded, int numberOfPurpleFishExploded, int numberOfMinesExploded, String playerName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -45,6 +45,7 @@ public class StatisticHelper extends SQLiteOpenHelper {
         values.put("numberOfRedFishExploded", numberOfRedFishExploded);
         values.put("numberOfPurpleFishExploded", numberOfPurpleFishExploded);
         values.put("numberOfMinesExploded", numberOfMinesExploded);
+        values.put("playerName", playerName);
 
         long result = db.insert("Statistics", null, values);
 
@@ -52,7 +53,7 @@ public class StatisticHelper extends SQLiteOpenHelper {
 
     public Cursor readScores() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT Highscore, _id FROM Statistics;";
+        String query = "SELECT Highscore, _id, playerName FROM Statistics;";
 
         return db.rawQuery(query, null);
     }

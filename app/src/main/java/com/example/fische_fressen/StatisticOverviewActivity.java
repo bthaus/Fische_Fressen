@@ -55,7 +55,7 @@ public class StatisticOverviewActivity extends AppCompatActivity implements Over
         }
         else{
             while(c.moveToNext()){
-                values.add(new ShortStatistic(c.getInt(0), c.getInt(1)));
+                values.add(new ShortStatistic(c.getInt(0), c.getInt(1),c.getString(2)));
             }
         }
 

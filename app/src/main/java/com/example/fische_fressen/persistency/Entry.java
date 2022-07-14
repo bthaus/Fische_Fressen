@@ -16,6 +16,7 @@ public class Entry implements BaseColumns {
     private String COLUMN_NAME_totalpoints ="totalpoints";
     private String COLUMN_NAME_Highscore ="Highscore";
     private String COLUMN_NAME_movesMade ="movesMade";
+    private String COLUMN_NAME_playerName ="playerName";
 
     public String SQL_CREATE_TABLE =
            "CREATE TABLE "+ TABLE_NAME+" ("+
@@ -31,7 +32,8 @@ public class Entry implements BaseColumns {
            COLUMN_NAME_numberOfBlueFishExploded +" INTEGER, "+
            COLUMN_NAME_numberOfRedFishExploded +" INTEGER, "+
            COLUMN_NAME_numberOfPurpleFishExploded +" INTEGER, "+
-           COLUMN_NAME_numberOfMinesExploded +" INTEGER );";
+           COLUMN_NAME_numberOfMinesExploded +" INTEGER, "+
+                   COLUMN_NAME_playerName+" VARCHAR);";
 
     public String SQL_DROP_TABLE ="DROP TABLE IF EXISTS "+TABLE_NAME+";";
 
