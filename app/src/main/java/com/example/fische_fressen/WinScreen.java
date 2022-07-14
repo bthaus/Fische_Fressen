@@ -40,7 +40,8 @@ public class WinScreen extends AppCompatActivity {
         if(Global.won){
             binding.winorlose.setText(R.string.game_won);
         }else{
-            binding.winorlose.setText(R.string.game_lost);
+            //binding.winorlose.setText(R.string.game_lost);
+            binding.winorlose.setText("Game Over!");
         }
         sh.addStatistic(GameStatistics.TotalStatistics.getHighscore(), GameStatistics.TotalStatistics.getMovesMade(),GameStatistics.TotalStatistics.getHighestPointsInOneTurn(), GameStatistics.TotalStatistics.getTotalpoints(),GameStatistics.TotalStatistics.getNumberOfYellowFishEaten(),  GameStatistics.TotalStatistics.getNumberOfBlueFishEaten(),GameStatistics.TotalStatistics.getNumberOfPurpleFishEaten(),GameStatistics.TotalStatistics.getNumberOfYellowFishExploded(),GameStatistics.TotalStatistics.getNumberOfBlueFishExploded(), GameStatistics.TotalStatistics.getNumberOfRedFishExploded(),GameStatistics.TotalStatistics.getNumberOfPurpleFishExploded(),GameStatistics.TotalStatistics.getNumberOfMinesExploded(), Global.getUserName());
         binding.totalpoints.setText(String.valueOf(Global.scorePoints));
