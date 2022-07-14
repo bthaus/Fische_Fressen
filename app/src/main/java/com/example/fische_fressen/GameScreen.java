@@ -25,6 +25,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.databinding.ActivityGameScreenBinding;
+import com.example.fische_fressen.utils.BackgroundMusicService;
 import com.example.fische_fressen.utils.Global;
 
 public class GameScreen extends AppCompatActivity implements SensorEventListener {
@@ -32,6 +33,7 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     private static final String DEBUG_TAG = "test";
     private AppBarConfiguration appBarConfiguration;
     private ActivityGameScreenBinding binding;
+
     //raster erstellen
     //container mit fischen füllen
     //spielzüge ausführen können
@@ -45,12 +47,16 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     FishContainer defaultContainer = new FishContainer(R.drawable.ic_launcher_foreground, -2);
 
     Bubblebar bubblebar;
+    Intent bgmusic;
+
 
     private SensorManager sensorManager;
     private Sensor lightSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        bgmusic = new Intent(this, BackgroundMusicService.class);
+        startService(bgmusic);
         Global.playing = true;
         Global.setGameScreen(this);
         super.onCreate(savedInstanceState);
@@ -117,6 +123,7 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
         Global.scorePoints = scorepoints;
         Global.won = false;
         startActivity(
+
                 new Intent(this, WinScreen.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
     }
 
@@ -209,12 +216,14 @@ public class GameScreen extends AppCompatActivity implements SensorEventListener
     public void onResume() {
         super.onResume();
         sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        startService(bgmusic);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         sensorManager.unregisterListener(this);
+        stopService(bgmusic);
     }
     //Light Sensor end
 }

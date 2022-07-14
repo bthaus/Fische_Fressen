@@ -30,6 +30,7 @@ public class Global {
     public static int explosionNumber;
 
 
+
     public static boolean isSleepytime() {
         return sleepytime;
     }

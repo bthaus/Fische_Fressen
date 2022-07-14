@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import com.example.fische_fressen.databinding.ActivityMainBinding;
 import com.example.fische_fressen.utils.Global;
+import com.example.fische_fressen.utils.MenuMusicService;
+
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
@@ -146,6 +148,10 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         Global.playing = false;
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
 

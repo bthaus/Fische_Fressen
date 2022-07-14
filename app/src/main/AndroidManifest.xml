@@ -39,7 +39,8 @@
             android:exported="false"
             android:label="@string/title_activity_game_screen"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
+            android:theme="@style/Theme.Fische_Fressen.NoActionBar"
+            />
         <activity
             android:name=".LobbyActivity"
             android:exported="false"
@@ -56,6 +57,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:enabled="true" android:name=".utils.BackgroundMusicService" />
+        <service android:enabled="true" android:name=".utils.MenuMusicService" />
+
     </application>
 
 </manifest>

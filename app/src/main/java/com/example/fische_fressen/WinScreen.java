@@ -1,6 +1,7 @@
 package com.example.fische_fressen;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import com.example.fische_fressen.GameModels.GameStatistics;
@@ -31,6 +32,8 @@ public class WinScreen extends AppCompatActivity {
         Global.playing=false;
         super.onCreate(savedInstanceState);
         sh = new StatisticHelper(this);
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.gg);
+        mp.start();
 
         binding = ActivityWinScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
