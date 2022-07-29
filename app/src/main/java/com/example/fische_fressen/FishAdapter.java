@@ -516,7 +516,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
             mPlayer.start();
             mPlayer.setOnCompletionListener(mediaPlayer -> {
-                Log.e("TAG", "released: ");
+                //Log.e("TAG", "released: ");
                 mPlayer.reset();
                 mPlayer.release();
                 this.interrupt();
@@ -534,7 +534,7 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
 
     public int eat(int position, int offset, FishContainer fishContainer) {
 
-        Log.e("TAG", "offset " + offset);
+       // Log.e("TAG", "offset " + offset);
         Looper.prepare();
         int points = 2;
         int timeout=Global.eatDelay;
@@ -577,9 +577,9 @@ public class FishAdapter extends ArrayAdapter<FishContainer> {
             }
             }
         } catch (IndexOutOfBoundsException e) {
-            Log.e("TAG", "wall reached: " + position);
+         //   Log.e("TAG", "wall reached: " + position);
         } catch (FishCantEatOtherFishException e) {
-            Log.e("TAG", "eat: cant be eaten" + position);
+          //  Log.e("TAG", "eat: cant be eaten" + position);
         } catch (WallReachedException e) {
             e.printStackTrace();
         }

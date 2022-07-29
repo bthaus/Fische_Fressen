@@ -51,7 +51,7 @@ if(this.position%5==0||(this.position+1)%5==0){
     }
 
 }
-        Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
+       // Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
 
         if(eater.fish.getSize()-1==this.fish.getSize()){
             GameStatistics.fishEaten(this.fish);
@@ -61,8 +61,8 @@ if(this.position%5==0||(this.position+1)%5==0){
 
            eater.fish= Global.defaultFish;
 
-            Log.e("TAG", "current fishsize: "+this.fish.getSize() );
-            Log.e("TAG", "fish eaten");
+           // Log.e("TAG", "current fishsize: "+this.fish.getSize() );
+           // Log.e("TAG", "fish eaten");
 
             return new Dinner(this, fish.getSize(),wallreached);
         }else if(this.fish.getSize()==-2){
@@ -71,8 +71,8 @@ if(this.position%5==0||(this.position+1)%5==0){
 
             eater.fish= Global.defaultFish;
 
-            Log.e("TAG", "current fishsize: "+this.fish.getSize() );
-            Log.e("TAG", "fish eaten");
+           // Log.e("TAG", "current fishsize: "+this.fish.getSize() );
+           // Log.e("TAG", "fish eaten");
 
             return new Dinner(this,1,wallreached);
         }
