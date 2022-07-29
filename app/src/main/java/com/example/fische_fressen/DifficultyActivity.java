@@ -42,6 +42,12 @@ public class DifficultyActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        Global.playing=false;
+    }
     public void startGame(){
         startActivity(new Intent(this, GameScreen.class));
     }

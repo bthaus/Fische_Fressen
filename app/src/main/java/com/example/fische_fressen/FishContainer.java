@@ -1,6 +1,9 @@
 package com.example.fische_fressen;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.fische_fressen.Exceptions.BottomReachedException;
 import com.example.fische_fressen.Exceptions.FishCantEatOtherFishException;
@@ -16,6 +19,15 @@ public class FishContainer {
     public int position;
     Fish fish;
 
+    public ImageView getFishview() {
+        return fishview;
+    }
+
+    public void setFishview(ImageView fishview) {
+        this.fishview = fishview;
+    }
+
+    ImageView fishview=null;
     public FishContainer(int imgid,int size) {
         fish=new Fish(Global.defaultFish);
         this.fish.setSize(size);
@@ -39,7 +51,7 @@ if(this.position%5==0||(this.position+1)%5==0){
     }
 
 }
-        Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
+       // Log.e("TAG", eater.fish.getSize()+"eat: "+this.fish.getSize());
 
         if(eater.fish.getSize()-1==this.fish.getSize()){
             GameStatistics.fishEaten(this.fish);
@@ -49,8 +61,8 @@ if(this.position%5==0||(this.position+1)%5==0){
 
            eater.fish= Global.defaultFish;
 
-            Log.e("TAG", "current fishsize: "+this.fish.getSize() );
-            Log.e("TAG", "fish eaten");
+           // Log.e("TAG", "current fishsize: "+this.fish.getSize() );
+           // Log.e("TAG", "fish eaten");
 
             return new Dinner(this, fish.getSize(),wallreached);
         }else if(this.fish.getSize()==-2){
@@ -59,8 +71,8 @@ if(this.position%5==0||(this.position+1)%5==0){
 
             eater.fish= Global.defaultFish;
 
-            Log.e("TAG", "current fishsize: "+this.fish.getSize() );
-            Log.e("TAG", "fish eaten");
+           // Log.e("TAG", "current fishsize: "+this.fish.getSize() );
+           // Log.e("TAG", "fish eaten");
 
             return new Dinner(this,1,wallreached);
         }
@@ -90,8 +102,7 @@ if(this.position%5==0||(this.position+1)%5==0){
 
         }
         if(fish.getSize()==5||fish.getSize()==3){
-            Log.e("TAG", "---------------------------------------explode: " );
-            this.fish=Global.defaultFish;
+
             return true;
         }
         this.fish=Global.defaultFish;

@@ -16,42 +16,57 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bg" />
 
-    <ImageButton
+    <TextView
         android:id="@+id/hardButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
-        android:background="?android:selectableItemBackground"
+        android:layout_height="50dp"
+        android:layout_marginBottom="176dp"
+        android:fontFamily="@font/sharksoftbites"
+        android:text="Hard"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/button_hard_normal"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/easyButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
-        app:layout_constraintBottom_toTopOf="@+id/mediumButton"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/button_easy_normal"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
+    <TextView
         android:id="@+id/mediumButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:selectableItemBackground"
+        android:layout_height="50dp"
+        android:fontFamily="@font/sharksoftbites"
+        android:text="Medium"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
         app:layout_constraintBottom_toTopOf="@+id/hardButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/button_medium_normal"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/easyButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:fontFamily="@font/sharksoftbites"
+        android:text="Easy"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/mediumButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/displayUserName"

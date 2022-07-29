@@ -16,4 +16,5 @@
     <string name="title_activity_win_screen">WinScreen</string>
     <string name="game_won">You Won!</string>
     <string name="game_lost">You lost :(</string>
+    <string name="title_activity_statistic_screen">StatisticScreen</string>
 </resources>

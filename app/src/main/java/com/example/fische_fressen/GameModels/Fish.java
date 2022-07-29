@@ -104,6 +104,7 @@ public class Fish {
         if(size<3){
             fisheaten++;
             if(fisheaten==3){
+
                 size++;
                 switch (size) {
                     case 0:

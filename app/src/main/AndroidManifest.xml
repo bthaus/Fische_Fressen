@@ -12,38 +12,54 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fische_Fressen.NoActionBar">
         <activity
-
+            android:name=".StatisticOverviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StatisticScreen"
+            android:exported="false"
+            android:label="@string/title_activity_statistic_screen"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Fische_Fressen.NoActionBar.NoActionBar" />
+        <activity
             android:name=".WinScreen"
             android:exported="false"
             android:label="@string/title_activity_win_screen"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar.NoActionBar" />
         <activity
             android:name=".DifficultyActivity"
-            android:exported="false" />
-
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TutorialActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".GameScreen"
             android:exported="false"
             android:label="@string/title_activity_game_screen"
-            android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Fische_Fressen.NoActionBar"
+            />
         <activity
             android:name=".LobbyActivity"
             android:exported="false"
             android:label="@string/title_activity_lobby"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.Fische_Fressen.NoActionBar" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:enabled="true" android:name=".utils.BackgroundMusicService" />
+        <service android:enabled="true" android:name=".utils.MenuMusicService" />
+
     </application>
 
 </manifest>
