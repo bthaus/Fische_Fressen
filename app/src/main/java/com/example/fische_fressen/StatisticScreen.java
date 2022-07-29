@@ -4,32 +4,24 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
-import com.example.fische_fressen.GameModels.GameStatistics;
 import com.example.fische_fressen.persistency.StatisticHelper;
-import com.example.fische_fressen.utils.Difficulty;
-import com.example.fische_fressen.utils.MyRecyclerViewAdapter;
+import com.example.fische_fressen.utils.StatisticsRecyclerViewAdapter;
 import com.example.fische_fressen.utils.StatisticBundle;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fische_fressen.databinding.ActivityStatisticScreenBinding;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class StatisticScreen extends AppCompatActivity  {
-    MyRecyclerViewAdapter adapter;
+    StatisticsRecyclerViewAdapter adapter;
     private AppBarConfiguration appBarConfiguration;
     private ActivityStatisticScreenBinding binding;
     Intent intent;
@@ -75,7 +67,7 @@ public class StatisticScreen extends AppCompatActivity  {
         // set up the RecyclerView
         RecyclerView recyclerView = binding.recyclerview;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyRecyclerViewAdapter(this, bundles);
+        adapter = new StatisticsRecyclerViewAdapter(this, bundles);
 
         recyclerView.setAdapter(adapter);
     }

@@ -12,13 +12,13 @@ import com.example.fische_fressen.R;
 
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class StatisticsRecyclerViewAdapter extends RecyclerView.Adapter<StatisticsRecyclerViewAdapter.ViewHolder> {
     private List<StatisticBundle> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public MyRecyclerViewAdapter(Context context, List<StatisticBundle> data) {
+    public StatisticsRecyclerViewAdapter(Context context, List<StatisticBundle> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

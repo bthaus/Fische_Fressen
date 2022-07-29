@@ -3,7 +3,6 @@ package com.example.fische_fressen.utils;
 import com.example.fische_fressen.FishContainer;
 import com.example.fische_fressen.GameModels.ExplosionFish;
 import com.example.fische_fressen.GameModels.Fish;
-import com.example.fische_fressen.GameModels.GameMode;
 import com.example.fische_fressen.GameScreen;
 import com.example.fische_fressen.R;
 
@@ -16,7 +15,6 @@ public class Global {
     public static int MineSize =5;
     public static String userName;
     public static String ID;
-    public static GameMode gameMode;
     public static int randomSeed;
     public static int lastClickedPosition=-1;
     public static Fish defaultFish=new Fish(R.drawable.empty,-2);
@@ -105,13 +103,7 @@ public class Global {
         Global.ID = ID;
     }
 
-    public static GameMode getGameMode() {
-        return gameMode;
-    }
 
-    public static void setGameMode(GameMode gameMode) {
-        Global.gameMode = gameMode;
-    }
 
     public static int getRandomSeed() {
         return randomSeed;
